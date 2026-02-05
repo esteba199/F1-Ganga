@@ -1,6 +1,6 @@
 # 🏎️ F1 Ganga - Reparto de Responsabilidades
 
-### 👤 Persona A: Cimientos y Acceso (Ana)
+### 👤 Persona A: Cimientos y Acceso (Jairo)
 
 **Foco:** Seguridad, usuarios y la base del proyecto.
 
@@ -9,7 +9,7 @@
 * **Migraciones:** `users` (añadir campos extra si es necesario)
 * **Rutas:** `auth.php`, `web.php` (perfil)
 
-### 👤 Persona B: El Core - CRUD F1 (Bruno)
+### 👤 Persona B: El Core - CRUD F1 (Julio)
 
 **Foco:** Gestión de la entidad principal y media.
 
@@ -19,7 +19,7 @@
 * **Vistas:** `cars/*.blade.php` (Index, Create, Edit, Show)
 * **Validación:** `CarRequest`
 
-### 👤 Persona C: Transacciones y Pagos (Carla)
+### 👤 Persona C: Transacciones y Pagos (Esteban)
 
 **Foco:** El flujo de dinero y pedidos.
 
@@ -29,7 +29,7 @@
 * **Mail:** `OrderConfirmed`
 * **Vistas:** `orders/*.blade.php`
 
-### 👤 Persona D: Calidad y Feedback (Diego)
+### 👤 Persona D: Calidad y Feedback (Misael)
 
 **Foco:** Reseñas, administración y pulido final.
 
@@ -44,45 +44,45 @@
 
 app/
 ├── Http/Controllers/
-│   ├── Auth/ ... (Ana)
-│   ├── CarController.php (Bruno)
-│   ├── CheckoutController.php (Carla)
-│   ├── ReviewController.php (Diego)
-│   └── ProfileController.php (Ana)
+│   ├── Auth/ ... (Jairo)
+│   ├── CarController.php (Julio)
+│   ├── CheckoutController.php (Esteban)
+│   ├── ReviewController.php (Misael)
+│   └── ProfileController.php (Jairo)
 │
 ├── Models/
 │   ├── User.php, Car.php, Team.php, Order.php, Review.php
 │
 ├── Services/
-│   ├── CloudinaryService.php (Bruno)
-│   └── PayPalService.php (Carla)
+│   ├── CloudinaryService.php (Julio)
+│   └── PayPalService.php (Esteban)
 │
 └── Mail/
-    └── OrderConfirmed.php (Carla)
+    └── OrderConfirmed.php (Esteban)
 
 database/
 ├── migrations/
 │   ├── 01_create_users_table.php
-│   ├── 02_create_cars_and_teams_tables.php (Bruno - puede unirlas)
-│   ├── 03_create_orders_table.php (Carla)
-│   └── 04_create_reviews_table.php (Diego)
+│   ├── 02_create_cars_and_teams_tables.php (Julio - puede unirlas)
+│   ├── 03_create_orders_table.php (Esteban)
+│   └── 04_create_reviews_table.php (Misael)
 │
 └── seeders/
-    └── DatabaseSeeder.php (Diego - El "Director de Orquesta")
+    └── DatabaseSeeder.php (Misael - El "Director de Orquesta")
 
 resources/views/
-├── cars/ ... (Bruno)
-├── orders/ ... (Carla)
-├── admin/ ... (Diego)
-└── components/ (Diego/Todos)
+├── cars/ ... (Julio)
+├── orders/ ... (Esteban)
+├── admin/ ... (Misael)
+└── components/ (Misael/Todos)
 
 routes/
-├── web.php (Diego/Todos)
-└── auth.php (Ana)
+├── web.php (Misael/Todos)
+└── auth.php (Jairo)
 
 
 
-### 👤 Ana (Autenticación y Perfil)
+### 👤 Jairo (Autenticación y Perfil)
 
 Se encarga de todo lo que viene por defecto con el kit de inicio (Breeze/Jetstream) y la gestión del usuario.
 
@@ -99,7 +99,7 @@ Se encarga de todo lo que viene por defecto con el kit de inicio (Breeze/Jetstre
 
 ---
 
-### 👤 Bruno (El Catálogo de Coches)
+### 👤 Julio (El Catálogo de Coches)
 
 Se encarga de la parte visual del CRUD principal y la subida de fotos.
 
@@ -113,7 +113,7 @@ Se encarga de la parte visual del CRUD principal y la subida de fotos.
 
 ---
 
-### 👤 Carla (Flujo de Compra)
+### 👤 Esteban (Flujo de Compra)
 
 Se encarga de la experiencia desde que el usuario decide comprar hasta que recibe el correo.
 
@@ -133,7 +133,7 @@ Se encarga de la experiencia desde que el usuario decide comprar hasta que recib
 
 ---
 
-### 👤 Diego (Admin y Componentes Globales)
+### 👤 Misael (Admin y Componentes Globales)
 
 Se encarga de la "cáscara" del proyecto y el panel de control.
 
