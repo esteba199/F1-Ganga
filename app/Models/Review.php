@@ -11,4 +11,14 @@ class Review extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function car()
+    {
+        return $this->belongsTo(Car::class);
+    }
 }
