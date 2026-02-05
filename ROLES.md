@@ -41,7 +41,7 @@
 
 
 ## 📂 Estructura de Archivos
-
+```
 app/
 ├── Http/Controllers/
 │   ├── Auth/ ... (Ana)
@@ -79,7 +79,7 @@ resources/views/
 routes/
 ├── web.php (Diego/Todos)
 └── auth.php (Ana)
-
+```
 
 
 ### 👤 Ana (Autenticación y Perfil)
