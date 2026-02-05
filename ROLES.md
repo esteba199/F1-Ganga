@@ -1,19 +1,14 @@
-👤 PERSONA A — Autenticación + Usuarios + Base
+# 👤 PERSONA A — Autenticación + Usuarios + Base
 (el “cimientos guy”)
-🎯 Responsabilidades
-Sistema de acceso
 
+## 🎯 Responsabilidades
++ Sistema de acceso
++ Verificación de email
++ Perfil de usuario
++ Seeders y factories base
 
-Verificación de email
-
-
-Perfil de usuario
-
-
-Seeders y factories base
-
-
-📂 Archivos que toca
+## 📂 Archivos que toca
+```
 app/
 ├── Models/
 │   └── User.php
@@ -39,37 +34,27 @@ database/
 routes/
 ├── auth.php
 └── web.php   // solo auth + profile
+```
 
-✅ Requisitos cubiertos:
-Autenticación
-
-
-Verificación email
-
-
-Acceso restringido
-
-
-MVC correcto
+## ✅ Requisitos cubiertos:
++ Autenticación
++ Verificación email
++ Acceso restringido
++ MVC correcto
 
 
 
-👤 PERSONA B — CRUD PRINCIPAL (Coches F1)
+# 👤 PERSONA B — CRUD PRINCIPAL (Coches F1)
 (el que sube nota 😎)
-🎯 Responsabilidades
-Entidad principal
 
+## 🎯 Responsabilidades
++ Entidad principal
++ CRUD completo
++ Paginación + filtros
++ Imágenes con Cloudinary
 
-CRUD completo
-
-
-Paginación + filtros
-
-
-Imágenes con Cloudinary
-
-
-📂 Archivos que toca
+## 📂 Archivos que toca
+```
 app/
 ├── Models/
 │   ├── Car.php
@@ -113,37 +98,25 @@ resources/views/
     ├── create.blade.php
     ├── edit.blade.php
     └── show.blade.php
+```
 
-✅ Requisitos cubiertos:
-CRUD principal
+## ✅ Requisitos cubiertos:
++ CRUD principal
++ Imágenes (Cloudinary)
++ Relaciones n:m
++ Paginación + filtros
 
-
-Imágenes (Cloudinary)
-
-
-Relaciones n:m
-
-
-Paginación + filtros
-
-
-
-👤 PERSONA C — Pagos (PayPal) + Pedidos
+# 👤 PERSONA C — Pagos (PayPal) + Pedidos
 (el delicado del grupo 💸)
-🎯 Responsabilidades
-Flujo de pago PayPal
 
+## 🎯 Responsabilidades
++ Flujo de pago PayPal
++ Registro de transacciones
++ Página de éxito
++ Email automático post-pago
 
-Registro de transacciones
-
-
-Página de éxito
-
-
-Email automático post-pago
-
-
-📂 Archivos que toca
+## 📂 Archivos que toca
+```
 app/
 ├── Models/
 │   ├── Order.php
@@ -175,37 +148,25 @@ resources/views/
 └── orders/
     ├── success.blade.php
     └── index.blade.php
+```
 
-✅ Requisitos cubiertos:
-Pasarela PayPal
+## ✅ Requisitos cubiertos:
++ Pasarela PayPal
++ Registro de transacciones
++ Email automático
++ Redirección post-pago
 
-
-Registro de transacciones
-
-
-Email automático
-
-
-Redirección post-pago
-
-
-
-👤 PERSONA D — Extras + Calidad + Relaciones
+# 👤 PERSONA D — Extras + Calidad + Relaciones
 (el que remata y deja todo fino)
-🎯 Responsabilidades
-Reviews
 
+## 🎯 Responsabilidades
++ Reviews
++ SoftDeletes
++ Seeders masivos
++ Dashboard admin
 
-SoftDeletes
-
-
-Seeders masivos
-
-
-Dashboard admin
-
-
-📂 Archivos que toca
+## 📂 Archivos que toca
+```
 app/
 ├── Models/
 │   └── Review.php
@@ -228,55 +189,38 @@ database/
 resources/views/
 ├── admin/
 │   └── dashboard.blade.php
+```
 
 Además:
-Revisar validaciones
-
-
-SoftDeletes en Car
-
-
-Comprobar relaciones Eloquent
-
-
-Responsive con Tailwind / Bootstrap
++ Revisar validaciones
++ SoftDeletes en Car
++ Comprobar relaciones Eloquent
++ Responsive con Tailwind / Bootstrap
 
 
 
-🧠 Organización recomendada (muy importante)
-Una rama por persona
+## 🧠 Organización recomendada (muy importante)
++ Una rama por persona
++ PRs pequeños
++ Un .env.example común
++ Reunión final para unificar seeders
 
 
-PRs pequeños
+## 🏁 Resultado final
++ ✔️ Proyecto equilibrado
++ ✔️ Nadie pisa archivos clave
++ ✔️ Todos tocan código importante
++ ✔️ Muy defendible ante el profe
 
-
-Un .env.example común
-
-
-Reunión final para unificar seeders
-
-
-
-🏁 Resultado final
-✔️ Proyecto equilibrado
- ✔️ Nadie pisa archivos clave
- ✔️ Todos tocan código importante
- ✔️ Muy defendible ante el profe
 Si quieres, en el siguiente paso te hago:
-el diagrama de BD con campos
-
-
-el flujo PayPal paso a paso
-
-
-o un checklist exacto para aprobar
-
++ el diagrama de BD con campos
++ el flujo PayPal paso a paso
++ o un checklist exacto para aprobar
 
 Tú decides 🏎️🔥
 
 
-
-
+```
 F1-Heritage-Cars/
 │
 ├── app/
@@ -431,5 +375,5 @@ F1-Heritage-Cars/
 ├── package.json
 ├── vite.config.js
 └── README.md                                   (Diego)
-
+```
 
