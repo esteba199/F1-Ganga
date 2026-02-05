@@ -1,6 +1,6 @@
 # 🏎️ F1 Ganga - Reparto de Responsabilidades
 
-### 👤 Persona A: Cimientos y Acceso (Jairo)
+### 👤 Persona A: Cimientos y Acceso (Ana)
 
 **Foco:** Seguridad, usuarios y la base del proyecto.
 
