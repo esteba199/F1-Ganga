@@ -1,6 +1,6 @@
 # 🏎️ F1 Ganga - Reparto de Responsabilidades
 
-### 👤 Persona A: Cimientos y Acceso (Ana)
+### 👤 Persona A: Cimientos y Acceso (Jairo)
 
 **Foco:** Seguridad, usuarios y la base del proyecto.
 
@@ -41,7 +41,7 @@
 
 
 ## 📂 Estructura de Archivos
-
+```
 app/
 ├── Http/Controllers/
 │   ├── Auth/ ... (Ana)
@@ -79,7 +79,7 @@ resources/views/
 routes/
 ├── web.php (Diego/Todos)
 └── auth.php (Ana)
-
+```
 
 
 ### 👤 Ana (Autenticación y Perfil)
