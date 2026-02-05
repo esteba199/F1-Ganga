@@ -41,7 +41,7 @@
 
 
 ## 📂 Estructura de Archivos
-
+```
 app/
 ├── Http/Controllers/
 │   ├── Auth/ ... (Jairo)
