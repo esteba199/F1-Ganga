@@ -79,7 +79,7 @@ resources/views/
 routes/
 ├── web.php (Misael/Todos)
 └── auth.php (Jairo)
-
+```
 
 
 ### 👤 Jairo (Autenticación y Perfil)
