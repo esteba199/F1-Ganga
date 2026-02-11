@@ -9,7 +9,15 @@ class Car extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'model',
+        'brand_id',
+        'team_id',
+        'year',
+        'price',
+        'description',
+        'image_url',
+    ];
 
     public function brand()
     {
