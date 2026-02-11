@@ -56,6 +56,7 @@ class DatabaseSeeder extends Seeder
         // 5. Llamar al Seeder de Reseñas (Misael)
         $this->call([
             ReviewSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
