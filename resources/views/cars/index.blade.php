@@ -1,76 +1,119 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-5">
-        <h1 class="display-4 fw-bold text-warning letter-spacing-2">CATÁLOGO F1</h1>
-        @auth
-            <a href="{{ route('cars.create') }}" class="btn btn-warning fw-bold px-4 rounded-pill shadow-lg">
-                <i class="bi bi-plus-lg me-1"></i> PUBLICAR COCHE
-            </a>
-        @else
-            <button class="btn btn-outline-light fw-bold px-4 rounded-pill" onclick="window.location.href='{{ route('login') }}'">
-                <i class="bi bi-lock me-1"></i> Acceder para Publicar
-            </button>
-        @endauth
+<div class="container-fluid px-4 mt-4">
+    <div class="container mb-5">
+        <h1 class="display-4 fw-bold text-warning letter-spacing-2">
+            <i class="bi bi-grid me-2"></i>CATÁLOGO F1
+        </h1>
+        <p class="text-white-50 lead">Explora nuestra selección exclusiva de monoplazas de leyenda.</p>
     </div>
 
-    @if(session('success'))
-        <div class="alert glass border-0 border-start border-4 border-success text-success mb-4 animate__animated animate__fadeIn">
-            <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
-        </div>
-    @endif
-
     @if($cars->count() > 0)
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 animate__animated animate__fadeInUp">
+        <div class="row g-4 animate__animated animate__fadeInUp">
             @foreach($cars as $car)
-                <div class="col">
-                    <div class="card h-100 border-0 shadow-lg position-relative overflow-hidden">
-                        <div class="position-relative" style="height: 200px; background: linear-gradient(135deg, #1a1e23 0%, #2d3436 100%);">
-                            @if($car->image_url)
-                                <img src="{{ $car->image_url }}" class="w-100 h-100 object-fit-cover" alt="{{ $car->model }}">
-                            @else
-                                <div class="d-flex align-items-center justify-content-center h-100">
-                                    <i class="bi bi-car-front display-1 text-warning opacity-25"></i>
+                <div class="col-12">
+                    <div class="card glass border-0 shadow-lg overflow-hidden hover-lift">
+                        <div class="row g-0">
+                            <!-- Image Column -->
+                            <div class="col-md-5 position-relative">
+                                <div class="position-relative h-100" style="min-height: 300px;">
+                                    @if($car->image_url)
+                                        <img src="{{ $car->image_url }}" class="w-100 h-100 object-fit-cover" alt="{{ $car->model }}">
+                                    @else
+                                        <div class="d-flex align-items-center justify-content-center h-100 bg-dark">
+                                            <i class="bi bi-car-front display-1 text-warning opacity-25"></i>
+                                        </div>
+                                    @endif
+                                    <span class="position-absolute top-0 start-0 m-3 badge bg-danger text-uppercase fw-bold py-2 px-3">{{ $car->year }}</span>
                                 </div>
-                            @endif
-                            <span class="position-absolute top-0 start-0 m-3 badge bg-danger text-uppercase fw-bold letter-spacing-1 py-2 px-3">En Venta</span>
-                        </div>
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h4 class="card-title fw-bold mb-0">{{ $car->model }}</h4>
-                                <span class="text-warning fw-bold fs-5">{{ number_format($car->price, 0, ',', '.') }}€</span>
                             </div>
-                            <div class="mb-3">
-                                <span class="badge bg-white bg-opacity-10 me-2"><i class="bi bi-calendar me-1"></i>{{ $car->year }}</span>
-                                <span class="badge bg-white bg-opacity-10 me-2"><i class="bi bi-speedometer2 me-1"></i>{{ $car->team->name }}</span>
-                            </div>
-                            <p class="text-white-50 small mb-4">{{ Str::limit($car->description ?? 'Sin descripción disponible', 80) }}</p>
-                            <div class="d-grid gap-2">
-                                <a href="{{ route('cars.show', $car) }}" class="btn btn-outline-warning fw-bold">Ver Detalles</a>
+
+                            <!-- Details Column -->
+                            <div class="col-md-7">
+                                <div class="card-body p-4 d-flex flex-column h-100">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <div>
+                                            <h2 class="fw-bold text-warning mb-1">{{ $car->model }}</h2>
+                                            <p class="text-white-50 fs-5 mb-0">
+                                                <i class="bi bi-building me-1"></i>{{ $car->brand->name }} • 
+                                                <i class="bi bi-flag ms-2 me-1"></i>{{ $car->team->name }}
+                                            </p>
+                                        </div>
+                                        <div class="text-end">
+                                            <h1 class="text-warning fw-bold mb-0">{{ number_format($car->price / 1000000, 1) }}M€</h1>
+                                            <small class="text-white-50">{{ number_format($car->price, 0, ',', '.') }}€</small>
+                                        </div>
+                                    </div>
+
+                                    <p class="text-white-50 mb-4 flex-grow-1 lead">{{ $car->description }}</p>
+
+                                    <!-- Technical Specs -->
+                                    <div class="row g-3 mb-4">
+                                        <div class="col-6 col-md-3">
+                                            <div class="spec-box p-3 rounded bg-white bg-opacity-5">
+                                                <i class="bi bi-speedometer text-warning fs-4 d-block mb-2"></i>
+                                                <small class="text-white-50 d-block text-uppercase letter-spacing-1">Top Speed</small>
+                                                <strong class="text-white h5 mb-0">{{ $car->top_speed ?? 'N/A' }} km/h</strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-md-3">
+                                            <div class="spec-box p-3 rounded bg-white bg-opacity-5">
+                                                <i class="bi bi-lightning-charge text-warning fs-4 d-block mb-2"></i>
+                                                <small class="text-white-50 d-block text-uppercase letter-spacing-1">0-100</small>
+                                                <strong class="text-white h5 mb-0">{{ $car->acceleration ?? 'N/A' }} s</strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-md-3">
+                                            <div class="spec-box p-3 rounded bg-white bg-opacity-5">
+                                                <i class="bi bi-gear text-warning fs-4 d-block mb-2"></i>
+                                                <small class="text-white-50 d-block text-uppercase letter-spacing-1">Power Unit</small>
+                                                <strong class="text-white h5 mb-0">{{ Str::limit($car->engine ?? 'N/A', 12) }}</strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-md-3">
+                                            <div class="spec-box p-3 rounded bg-white bg-opacity-5">
+                                                <i class="bi bi-fire text-warning fs-4 d-block mb-2"></i>
+                                                <small class="text-white-50 d-block text-uppercase letter-spacing-1">Power</small>
+                                                <strong class="text-white h5 mb-0">{{ $car->horsepower ?? 'N/A' }} HP</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Action Buttons -->
+                                    <div class="d-flex gap-3">
+                                        <a href="{{ route('cars.show', $car) }}" class="btn btn-outline-warning btn-lg flex-grow-1 fw-bold">
+                                            <i class="bi bi-eye me-2"></i>VER DETALLES
+                                        </a>
+                                        @auth
+                                            <form action="{{ route('cart.store') }}" method="POST" class="flex-grow-1">
+                                                @csrf
+                                                <input type="hidden" name="car_id" value="{{ $car->id }}">
+                                                <input type="hidden" name="quantity" value="1">
+                                                <button type="submit" class="btn btn-warning btn-lg fw-bold w-100">
+                                                    <i class="bi bi-cart-plus me-2"></i>AÑADIR AL CARRITO
+                                                </button>
+                                            </form>
+                                        @endauth
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
-    @else
-        <div class="text-center py-5 animate__animated animate__fadeIn">
-            <div class="card glass border-0 shadow-lg p-5 mx-auto" style="max-width: 600px;">
-                <i class="bi bi-car-front display-1 text-warning mb-4"></i>
-                <h3 class="text-white mb-3">No hay coches disponibles</h3>
-                <p class="text-white-50 mb-4">Sé el primero en publicar un coche en el catálogo.</p>
-                @auth
-                    <a href="{{ route('cars.create') }}" class="btn btn-warning fw-bold px-5">
-                        <i class="bi bi-plus-lg me-2"></i>Publicar el Primero
-                    </a>
-                @else
-                    <a href="{{ route('login') }}" class="btn btn-outline-warning fw-bold px-5">
-                        <i class="bi bi-box-arrow-in-right me-2"></i>Acceder para Publicar
-                    </a>
-                @endauth
-            </div>
+
+        <div class="container mt-5">
+            {{ $cars->links() }}
         </div>
     @endif
 </div>
+
+<style>
+.hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.hover-lift:hover { transform: translateY(-5px); box-shadow: 0 1rem 3rem rgba(253, 197, 0, 0.2) !important; }
+.spec-box { transition: background 0.3s ease; }
+.spec-box:hover { background: rgba(253, 197, 0, 0.1) !important; }
+</style>
 @endsection

@@ -6,6 +6,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 
 // Homepage redirect to cars catalog
@@ -21,6 +22,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 // Julio - Cars CRUD
+Route::get('/cars/search', [CarController::class, 'search'])->name('cars.search');
 Route::resource('cars', CarController::class);
 
 Route::middleware('auth')->group(function () {
@@ -36,6 +38,13 @@ Route::middleware('auth')->group(function () {
 
     // Misael - Reviews (User)
     Route::post('/cars/{car}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+    
+    // Misael - Shopping Cart
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
+    Route::patch('/cart/{cart}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{cart}', [CartController::class, 'destroy'])->name('cart.destroy');
+    Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 });
 
 // Misael - Admin Routes (Protected)

@@ -17,6 +17,11 @@ class Car extends Model
         'price',
         'description',
         'image_url',
+        'top_speed',
+        'acceleration',
+        'engine',
+        'horsepower',
+        'transmission',
     ];
 
     public function brand()
