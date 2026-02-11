@@ -8,13 +8,17 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AdminDashboardController;
 use Illuminate\Support\Facades\Route;
 
+// Homepage redirect to cars catalog
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('cars.index');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// User Dashboard
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
 
 // Julio - Cars CRUD
 Route::resource('cars', CarController::class);
@@ -30,11 +34,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 
-    // Misael - Reviews
+    // Misael - Reviews (User)
     Route::post('/cars/{car}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+});
 
-    // Misael - Admin Dashboard
-    Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+// Misael - Admin Routes (Protected)
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 });
 
 require __DIR__.'/auth.php';

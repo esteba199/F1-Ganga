@@ -1,8 +1,93 @@
 // Fonts
-@import url('https://fonts.bunny.net/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
 
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+// Global Styles
+body {
+    background: radial-gradient(circle at top right, #1a1e23 0%, #0b0e11 100%);
+    background-attachment: fixed;
+    min-vh: 100vh;
+}
+
+// Glassmorphism Utility
+.glass {
+    background: $glass-bg;
+    backdrop-filter: $glass-blur;
+    -webkit-backdrop-filter: $glass-blur;
+    border: 1px solid $glass-border;
+    border-radius: 15px;
+    box-shadow: $glass-shadow;
+}
+
+// Bootstrap Component Overrides
+.card {
+    @extend .glass;
+    color: $body-color;
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease;
+
+    &:hover {
+        border-color: rgba($primary, 0.4);
+    }
+}
+
+.table {
+    color: $body-color;
+    --bs-table-bg: transparent;
+    --bs-table-hover-bg: rgba(255, 255, 255, 0.05);
+
+    thead th {
+        background: rgba(255, 255, 255, 0.1);
+        border-bottom: 2px solid $glass-border;
+    }
+}
+
+.navbar-glass {
+    @extend .glass;
+    border-radius: 0 0 20px 20px;
+    border-top: none;
+    margin-top: -1px;
+}
+
+.dropdown-menu {
+    @extend .glass;
+    background: rgba(15, 20, 25, 0.95);
+    border: 1px solid $glass-border;
+
+    .dropdown-item {
+        color: $body-color;
+
+        &:hover {
+            background: rgba($primary, 0.2);
+            color: white;
+        }
+    }
+}
+
+.form-control,
+.form-select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid $glass-border;
+    color: white;
+    border-radius: 10px;
+
+    &:focus {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: $primary;
+        box-shadow: 0 0 0 0.25rem rgba($primary, 0.25);
+        color: white;
+    }
+}
+
+.btn-primary {
+    border-radius: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.6rem 1.5rem;
+}

@@ -1,36 +1,88 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Add New Car') }}</div>
+<div class="container animate__animated animate__fadeIn">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1 class="display-5 fw-bold text-warning letter-spacing-1">PUBLICAR <span class="text-white">COCHE</span></h1>
+        <a href="{{ route('cars.index') }}" class="btn btn-outline-light rounded-pill px-4">
+            <i class="bi bi-arrow-left me-2"></i>Volver
+        </a>
+    </div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('cars.store') }}" enctype="multipart/form-data">
-                        @csrf
-                        
-                        <div class="mb-3">
-                            <label for="model" class="form-label">{{ __('Model') }}</label>
-                            <input type="text" class="form-control" id="model" name="model" required>
-                        </div>
+    @if($errors->any())
+        <div class="alert glass border-0 border-start border-4 border-danger text-danger mb-4">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-                        <div class="mb-3">
-                            <label for="team" class="form-label">{{ __('Team') }}</label>
-                            <input type="text" class="form-control" id="team" name="team" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="image" class="form-label">{{ __('Image') }}</label>
-                            <input type="file" class="form-control" id="image" name="image">
-                        </div>
-
-                        <button type="submit" class="btn btn-success">{{ __('Save Car') }}</button>
-                        <a href="{{ route('cars.index') }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
-                    </form>
+    <div class="card glass border-0 shadow-lg">
+        <div class="card-body p-5">
+            <form method="POST" action="{{ route('cars.store') }}" enctype="multipart/form-data">
+                @csrf
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="model" class="form-label text-warning fw-bold">Modelo</label>
+                        <input type="text" class="form-control" id="model" name="model" value="{{ old('model') }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="year" class="form-label text-warning fw-bold">Año</label>
+                        <input type="number" class="form-control" id="year" name="year" value="{{ old('year') }}" min="1950" max="{{ date('Y') + 1 }}" required>
+                    </div>
                 </div>
-            </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="brand_id" class="form-label text-warning fw-bold">Marca</label>
+                        <select class="form-select" id="brand_id" name="brand_id" required>
+                            <option value="">Selecciona una marca...</option>
+                            @foreach($brands as $brand)
+                                <option value="{{ $brand->id }}" {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
+                                    {{ $brand->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="team_id" class="form-label text-warning fw-bold">Equipo</label>
+                        <select class="form-select" id="team_id" name="team_id" required>
+                            <option value="">Selecciona un equipo...</option>
+                            @foreach($teams as $team)
+                                <option value="{{ $team->id }}" {{ old('team_id') == $team->id ? 'selected' : '' }}>
+                                    {{ $team->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="price" class="form-label text-warning fw-bold">Precio (€)</label>
+                    <input type="number" class="form-control" id="price" name="price" value="{{ old('price') }}" min="0" step="0.01" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="description" class="form-label text-warning fw-bold">Descripción</label>
+                    <textarea class="form-control" id="description" name="description" rows="4">{{ old('description') }}</textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label for="image" class="form-label text-warning fw-bold">Imagen del Coche</label>
+                    <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                    <div class="form-text text-white-50 small">Formatos aceptados: JPG, PNG, GIF, WEBP. Máximo 5MB.</div>
+                </div>
+
+                <div class="d-flex gap-3 justify-content-end mt-5">
+                    <a href="{{ route('cars.index') }}" class="btn btn-outline-light px-4">Cancelar</a>
+                    <button type="submit" class="btn btn-warning text-dark fw-bold px-5">
+                        <i class="bi bi-check-lg me-2"></i>Publicar Coche
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

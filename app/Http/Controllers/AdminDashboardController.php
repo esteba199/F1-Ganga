@@ -15,6 +15,9 @@ class AdminDashboardController extends Controller
             'total_reviews' => \App\Models\Review::count(),
         ];
 
-        return view('admin.dashboard', compact('stats'));
+        $recentReviews = \App\Models\Review::with(['user', 'car'])->latest()->take(5)->get();
+        $recentOrders = \App\Models\Order::with('user')->latest()->take(5)->get();
+
+        return view('admin.dashboard', compact('stats', 'recentReviews', 'recentOrders'));
     }
 }

@@ -1,7 +1,14 @@
-// Body
-$body-bg: #f8fafc;
+// F1 Ganga - Dark Mode Palette
+$body-bg: #0b0e11;
+$body-color: #e9ecef;
+$primary: #e10600; // F1 Red
+$secondary: #212529;
+$font-family-sans-serif: 'Outfit', 'Inter', 'Nunito', sans-serif;
 
-// Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
+// Glassmorphism Constants
+$glass-bg: rgba(255, 255, 255, 0.05);
+$glass-border: rgba(255, 255, 255, 0.1);
+$glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+$glass-blur: blur(12px);
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;

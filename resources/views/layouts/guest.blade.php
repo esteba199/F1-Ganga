@@ -14,18 +14,19 @@
         <!-- Scripts -->
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     </head>
-    <body class="bg-light">
-        <div class="container mt-5">
+    <body class="bg-dark text-light overflow-hidden" style="background: radial-gradient(circle at top right, #1a1e23 0%, #0b0e11 100%);">
+        <div class="container d-flex flex-column min-vh-100 justify-content-center py-5">
             <div class="row justify-content-center">
                 <div class="col-md-5">
-                    <div class="text-center mb-4">
-                        <a href="/">
-                            <h2 class="fw-bold">F1 Ganga</h2>
+                    <div class="text-center mb-5 animate__animated animate__fadeInDown">
+                        <a href="/" class="text-decoration-none">
+                            <h1 class="fw-bold text-warning display-4 mb-0"><i class="bi bi-speedometer2 me-2"></i>F1 Ganga</h1>
+                            <p class="text-white-50 letter-spacing-2 mt-2 font-monospace">PREMIUM ACCESS</p>
                         </a>
                     </div>
 
-                    <div class="card shadow-sm">
-                        <div class="card-body">
+                    <div class="card glass border-0 bg-transparent shadow-lg py-3 animate__animated animate__fadeInUp">
+                        <div class="card-body px-5">
                             {{ $slot }}
                         </div>
                     </div>
