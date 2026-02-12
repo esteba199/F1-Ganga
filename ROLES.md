@@ -22,7 +22,7 @@
 ### 👤 Persona C: Transacciones y Pagos (Esteban)
 
 **Foco:** El flujo de dinero y pedidos.
-
+ 
 * **Modelos:** `Order`, `OrderItem`
 * **Controladores:** `CheckoutController` (Integra PayPal), `OrderController` (Historial)
 * **Servicio:** `PayPalService`
