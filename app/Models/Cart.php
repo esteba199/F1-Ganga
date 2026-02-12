@@ -14,12 +14,13 @@ class Cart extends Model
         'quantity',
     ];
 
-    // Relaciones
+    // Relación: Un item del carrito pertenece a un usuario.
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    // Relación: Un item del carrito corresponde a un coche.
     public function car()
     {
         return $this->belongsTo(Car::class);

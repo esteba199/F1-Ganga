@@ -11,11 +11,13 @@ class OrderItem extends Model
 
     protected $guarded = [];
 
+    // Relación: Un item pertenece a una orden.
     public function order()
     {
         return $this->belongsTo(Order::class);
     }
 
+    // Relación: Un item corresponde a un coche.
     public function car()
     {
         return $this->belongsTo(Car::class);

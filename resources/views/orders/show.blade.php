@@ -3,38 +3,36 @@
 @section('content')
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h2 class="mb-4 fw-bold text-warning"><i class="bi bi-credit-card-2-front me-2"></i>Finalizar Compra</h2>
-            
-            @if(session('error'))
-                <div class="alert alert-danger shadow-sm">
-                    <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ session('error') }}
-                </div>
-            @endif
-
-            @if(session('info'))
-                <div class="alert alert-info shadow-sm">
-                    <i class="bi bi-info-circle-fill me-2"></i>{{ session('info') }}
-                </div>
-            @endif
+        <div class="col-md-8 animate__animated animate__fadeIn">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold text-warning"><i class="bi bi-receipt me-2"></i>Detalle del Pedido #{{ $order->id }}</h2>
+                <a href="{{ route('orders.index') }}" class="btn btn-outline-light"><i class="bi bi-arrow-left me-2"></i>Volver</a>
+            </div>
 
             <div class="card bg-dark text-white border-secondary shadow-lg">
-                <div class="card-header bg-secondary bg-opacity-25 border-bottom border-secondary">
-                    <h5 class="mb-0">Resumen del Pedido</h5>
+                <div class="card-header bg-secondary bg-opacity-25 border-bottom border-secondary d-flex justify-content-between align-items-center">
+                    <span>Realizado el {{ $order->created_at->format('d/m/Y H:i') }}</span>
+                    @if($order->status === 'paid')
+                        <span class="badge bg-success rounded-pill px-3">Pagado</span>
+                    @elseif($order->status === 'pending')
+                        <span class="badge bg-warning text-dark rounded-pill px-3">Pendiente</span>
+                    @else
+                        <span class="badge bg-secondary rounded-pill px-3">{{ ucfirst($order->status) }}</span>
+                    @endif
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-dark table-hover mb-0">
+                        <table class="table table-dark table-striped mb-0">
                             <thead>
                                 <tr>
-                                    <th>Coche</th>
+                                    <th>Producto</th>
                                     <th class="text-center">Cantidad</th>
-                                    <th class="text-end">Precio Unitario</th>
-                                    <th class="text-end">Subtotal</th>
+                                    <th class="text-end">Precio</th>
+                                    <th class="text-end">Total</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($cartItems as $item)
+                                @foreach($order->items as $item)
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center">
@@ -52,34 +50,25 @@
                                             </div>
                                         </td>
                                         <td class="text-center align-middle">{{ $item->quantity }}</td>
-                                        <td class="text-end align-middle">{{ number_format($item->car->price, 2) }} €</td>
-                                        <td class="text-end align-middle fw-bold">{{ number_format($item->car->price * $item->quantity, 2) }} €</td>
+                                        <td class="text-end align-middle">{{ number_format($item->price, 2) }} €</td>
+                                        <td class="text-end align-middle fw-bold">{{ number_format($item->price * $item->quantity, 2) }} €</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                             <tfoot class="border-top border-secondary">
                                 <tr>
-                                    <td colspan="3" class="text-end fw-bold fs-5">Total a Pagar:</td>
-                                    <td class="text-end fw-bold fs-4 text-warning">{{ number_format($total, 2) }} €</td>
+                                    <td colspan="3" class="text-end fw-bold fs-5">Total Pagado:</td>
+                                    <td class="text-end fw-bold fs-4 text-warning">{{ number_format($order->total, 2) }} €</td>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
                 </div>
-                <div class="card-footer bg-secondary bg-opacity-25 border-top border-secondary p-4">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a href="{{ route('cart.index') }}" class="btn btn-outline-light">
-                            <i class="bi bi-arrow-left me-2"></i>Volver al Carrito
-                        </a>
-                        
-                        <form action="{{ route('checkout.process') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-warning btn-lg fw-bold shadow">
-                                <i class="bi bi-paypal me-2"></i>Pagar con PayPal
-                            </button>
-                        </form>
-                    </div>
+                @if($order->payment_id)
+                <div class="card-footer bg-secondary bg-opacity-25 border-top border-secondary text-end">
+                    <small class="text-muted">ID de Transacción PayPal: <span class="text-monospace text-white">{{ $order->payment_id }}</span></small>
                 </div>
+                @endif
             </div>
         </div>
     </div>

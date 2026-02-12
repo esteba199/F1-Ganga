@@ -11,11 +11,13 @@ class Order extends Model
 
     protected $guarded = [];
 
+    // Relación: Una orden pertenece a un usuario.
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    // Relación: Una orden tiene muchos items.
     public function items()
     {
         return $this->hasMany(OrderItem::class);
