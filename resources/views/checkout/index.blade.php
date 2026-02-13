@@ -84,13 +84,6 @@
                                 <i class="bi bi-paypal me-2"></i>Pagar con PayPal
                             </button>
                         </form>
-                        
-                        <form action="{{ route('checkout.free') }}" method="POST" class="ms-2">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-success btn-lg fw-bold shadow">
-                                <i class="bi bi-cash-coin me-2"></i>Simular Pago (Demo)
-                            </button>
-                        </form>
                     </div>
                 </div>
             </div>

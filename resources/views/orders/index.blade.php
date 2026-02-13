@@ -44,24 +44,9 @@
                                     </td>
                                     <td class="align-middle fw-bold fs-5">{{ number_format($order->total, 2) }} €</td>
                                     <td class="align-middle">
-                                        <div class="d-flex gap-2">
-                                            <a href="{{ route('orders.show', $order) }}" class="btn btn-sm btn-outline-info" title="Ver Detalles">
-                                                <i class="bi bi-eye"></i>
-                                            </a>
-                                            
-                                            @if($order->status === 'paid')
-                                                <a href="{{ route('orders.invoice', $order) }}" class="btn btn-sm btn-outline-light" title="Descargar Factura">
-                                                    <i class="bi bi-file-earmark-pdf"></i>
-                                                </a>
-                                                
-                                                <form action="{{ route('orders.refund', $order) }}" method="POST" onsubmit="return confirm('¿Estás seguro de solicitar la devolución?');">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Solicitar Devolución">
-                                                        <i class="bi bi-arrow-return-left"></i>
-                                                    </button>
-                                                </form>
-                                            @endif
-                                        </div>
+                                        <a href="{{ route('orders.show', $order) }}" class="btn btn-sm btn-outline-info">
+                                            <i class="bi bi-eye"></i> Ver
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach

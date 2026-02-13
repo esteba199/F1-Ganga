@@ -34,14 +34,10 @@ Route::middleware('auth')->group(function () {
     // Esteban - Checkout & Orders
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
-    Route::post('/checkout/free', [CheckoutController::class, 'processFree'])->name('checkout.free'); // Nueva ruta Demo
     Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
     Route::get('/checkout/cancel', [CheckoutController::class, 'cancel'])->name('checkout.cancel');
-    
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-    Route::get('/orders/{order}/invoice', [OrderController::class, 'downloadInvoice'])->name('orders.invoice'); // Nueva ruta Factura
-    Route::post('/orders/{order}/refund', [OrderController::class, 'refund'])->name('orders.refund'); // Nueva ruta Devolución
 
     // Misael - Reviews (User)
     Route::post('/cars/{car}/reviews', [ReviewController::class, 'store'])->name('reviews.store');

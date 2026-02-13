@@ -22,10 +22,4 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
-
-    // Relación: Una orden tiene una transacción asociada.
-    public function transaction()
-    {
-        return $this->hasOne(Transaction::class);
-    }
 }
