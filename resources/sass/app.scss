@@ -24,6 +24,23 @@ body {
     box-shadow: $glass-shadow;
 }
 
+// Subtle Fade Animation
+.fade-in-subtle {
+    animation: fadeInSubtle 0.8s ease-out forwards;
+}
+
+@keyframes fadeInSubtle {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 // Bootstrap Component Overrides
 .card {
     @extend .glass;
@@ -90,4 +107,21 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     padding: 0.6rem 1.5rem;
+}
+
+// Cart Badge Styling
+.cart-badge {
+    background: #ff4757;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid #1a1e23;
+    padding: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }

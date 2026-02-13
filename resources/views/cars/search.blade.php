@@ -45,7 +45,7 @@
 
     @if($cars->count() > 0)
         <!-- Grid View for Search Results -->
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 animate__animated animate__fadeIn">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 fade-in-subtle">
             @foreach($cars as $car)
                 <div class="col">
                     <div class="card glass border-0 h-100 shadow-sm hover-grow overflow-hidden">

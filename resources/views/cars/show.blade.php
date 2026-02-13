@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container animate__animated animate__fadeIn">
+<div class="container fade-in-subtle">
     <!-- Header with Actions -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <a href="{{ route('cars.index') }}" class="btn btn-outline-light rounded-pill px-4">
@@ -79,7 +79,7 @@
 
                     @auth
                         <div class="d-grid gap-2">
-                            <button class="btn btn-warning btn-lg fw-bold">
+                            <button onclick="addToCart({{ $car->id }})" class="btn btn-warning btn-lg fw-bold">
                                 <i class="bi bi-cart-plus me-2"></i>Añadir al Carrito
                             </button>
                         </div>

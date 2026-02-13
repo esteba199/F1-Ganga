@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container animate__animated animate__fadeIn">
+<div class="container fade-in-subtle">
     <div class="container mb-5">
         <h1 class="display-5 fw-bold text-warning letter-spacing-2 mb-2">
             <i class="bi bi-speedometer2 me-2"></i>MI PANEL

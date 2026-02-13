@@ -50,9 +50,9 @@
                                 <a class="nav-link {{ request()->routeIs('cart.index') ? 'active text-warning' : 'text-white' }}" href="{{ route('cart.index') }}">
                                     <i class="bi bi-cart3 me-1"></i>Carrito
                                     @php $cartCount = \App\Models\Cart::where('user_id', auth()->id())->sum('quantity'); @endphp
-                                    @if($cartCount > 0)
-                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.6rem; padding:0.2em 0.4em;">{{ $cartCount }}</span>
-                                    @endif
+                                    <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle cart-badge {{ $cartCount > 0 ? '' : 'd-none' }}">
+                                        {{ $cartCount }}
+                                    </span>
                                 </a>
                             </li>
                         </ul>
@@ -126,6 +126,29 @@
                 </div>
             </div>
         </footer>
-    </div>
+    <script>
+        function addToCart(carId) {
+            fetch("{{ route('cart.store') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({ car_id: carId, quantity: 1 })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const badge = document.getElementById('cart-badge');
+                    if (badge) {
+                        badge.innerText = data.cartCount;
+                        badge.classList.remove('d-none');
+                    }
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
 </body>
 </html>

@@ -26,22 +26,26 @@ class ImageService
         }
 
         try {
+            // Refinamos la búsqueda para que sea más específica de F1
             $response = Http::get('https://api.unsplash.com/search/photos', [
-                'query' => 'Coche ' . $modelName,
-                'per_page' => 1,
+                'query' => 'Formula 1 ' . $modelName . ' racing car',
+                'per_page' => 5, // Pedimos varias para elegir una al azar
+                'orientation' => 'landscape',
                 'client_id' => $this->accessKey,
             ]);
 
             if ($response->successful()) {
                 $data = $response->json();
                 if (!empty($data['results'])) {
-                    return $data['results'][0]['urls']['regular'];
+                    // Seleccionar una al azar de las primeras 5 para dar variedad
+                    $index = rand(0, count($data['results']) - 1);
+                    return $data['results'][$index]['urls']['regular'];
                 }
             }
         } catch (\Exception $e) {
             Log::error("Error fetching image for {$modelName}: " . $e->getMessage());
         }
 
-        return "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=1200&h=800&fit=crop";
+        return "https://images.unsplash.com/photo-1541443131876-44b03de101c5?w=1200&h=800&fit=crop"; // Una imagen de McLaren como alternativa fija
     }
 }

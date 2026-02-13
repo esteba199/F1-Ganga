@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container animate__animated animate__fadeIn">
+<div class="container fade-in-subtle">
     <div class="container mb-5">
         <div class="d-flex justify-content-between align-items-center">
             <h1 class="display-5 fw-bold text-warning letter-spacing-2">

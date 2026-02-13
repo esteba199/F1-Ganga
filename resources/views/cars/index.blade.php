@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid px-4 mt-4">
+<div class="container-fluid px-4 mt-4 fade-in-subtle">
     <div class="container mb-5">
         <h1 class="display-5 fw-bold text-warning letter-spacing-2 mb-2">
             <i class="bi bi-grid me-2"></i>CATÁLOGO F1
@@ -86,14 +86,9 @@
                                             <i class="bi bi-eye me-2"></i>VER DETALLES
                                         </a>
                                         @auth
-                                            <form action="{{ route('cart.store') }}" method="POST" class="flex-grow-1">
-                                                @csrf
-                                                <input type="hidden" name="car_id" value="{{ $car->id }}">
-                                                <input type="hidden" name="quantity" value="1">
-                                                <button type="submit" class="btn btn-warning btn-lg fw-bold w-100">
-                                                    <i class="bi bi-cart-plus me-2"></i>AÑADIR AL CARRITO
-                                                </button>
-                                            </form>
+                                            <button onclick="addToCart({{ $car->id }})" class="btn btn-warning btn-lg fw-bold flex-grow-1">
+                                                <i class="bi bi-cart-plus me-2"></i>AÑADIR AL CARRITO
+                                            </button>
                                         @endauth
                                     </div>
                                 </div>

@@ -38,19 +38,27 @@ class CartController extends Controller
             ->first();
 
         if ($cartItem) {
-            // Incrementar cantidad
             $cartItem->increment('quantity', $request->quantity ?? 1);
-            return back()->with('success', 'Cantidad actualizada en el carrito');
+            $msg = 'Cantidad actualizada en el carrito';
+        } else {
+            Cart::create([
+                'user_id' => auth()->id(),
+                'car_id' => $request->car_id,
+                'quantity' => $request->quantity ?? 1,
+            ]);
+            $msg = '¡Coche añadido al carrito!';
         }
 
-        // Crear nuevo item
-        Cart::create([
-            'user_id' => auth()->id(),
-            'car_id' => $request->car_id,
-            'quantity' => $request->quantity ?? 1,
-        ]);
+        if ($request->ajax()) {
+            $cartCount = Cart::where('user_id', auth()->id())->sum('quantity');
+            return response()->json([
+                'success' => true,
+                'message' => $msg,
+                'cartCount' => $cartCount
+            ]);
+        }
 
-        return back()->with('success', '¡Coche añadido al carrito!');
+        return back()->with('success', $msg);
     }
 
     // Actualizar cantidad
