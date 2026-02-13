@@ -34,5 +34,42 @@ class OrderController extends Controller
 
         return view('orders.show', compact('order'));
     }
+
+    /**
+     * Descargar factura en PDF.
+     */
+    public function downloadInvoice(Order $order)
+    {
+        if ($order->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('invoices.order', compact('order'));
+        return $pdf->download('invoice-' . $order->id . '.pdf');
+    }
+
+    /**
+     * Solicitar devolución del pedido.
+     */
+    public function refund(Order $order)
+    {
+        if ($order->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        if ($order->status !== 'paid') {
+            return back()->with('error', 'Solo se pueden devolver pedidos pagados.');
+        }
+
+        // Actualizar estado del pedido
+        $order->update(['status' => 'refunded']);
+
+        // Actualizar transacción asociada si existe
+        if ($order->transaction) {
+            $order->transaction->update(['status' => 'refunded']);
+        }
+
+        return back()->with('success', 'Devolución procesada correctamente.');
+    }
 }
 

@@ -150,6 +150,67 @@ class CheckoutController extends Controller
     }
 
     /**
+     * Procesa un pago gratuito de prueba (Demo).
+     */
+    public function processFree()
+    {
+        return DB::transaction(function () {
+            $user = auth()->user();
+            $cartItems = Cart::where('user_id', $user->id)->with('car')->get();
+            
+            if ($cartItems->isEmpty()) {
+                return redirect()->route('cars.index')->with('error', 'El carrito está vacío.');
+            }
+
+            $total = $cartItems->sum(function ($item) {
+                return $item->car->price * $item->quantity;
+            });
+
+            // 1. Crear registro de la Orden
+            $order = Order::create([
+                'user_id' => $user->id,
+                'total' => $total,
+                'status' => 'paid',
+                'payment_id' => 'DEMO-' . uniqid(), 
+            ]);
+
+            // 2. Crear los Items de la Orden
+            foreach ($cartItems as $item) {
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'car_id' => $item->car_id,
+                    'quantity' => $item->quantity, 
+                    'price' => $item->car->price,
+                ]);
+            }
+
+            // 3. Registrar la Transacción (Demo)
+            \App\Models\Transaction::create([
+                'order_id' => $order->id,
+                'paypal_transaction_id' => 'DEMO-' . uniqid(),
+                'amount' => $total,
+                'status' => 'completed',
+                'payment_method' => 'free_test',
+                'payment_details' => ['note' => 'Pago de prueba gratuito'],
+            ]);
+
+            // 4. Vaciar el Carrito del usuario
+            Cart::where('user_id', $user->id)->delete();
+
+            // 5. Enviar Correo de Confirmación
+            // Envolver en try-catch por si mailtrap falla en demo
+            try {
+                Mail::to($user->email)->send(new OrderConfirmed($order));
+            } catch (\Exception $e) {
+                // Log error or ignore for demo
+            }
+
+            // Mostrar vista de éxito
+            return view('checkout.success', compact('order'));
+        });
+    }
+
+    /**
      * Maneja la cancelación del pago por parte del usuario.
      */
     public function cancel()

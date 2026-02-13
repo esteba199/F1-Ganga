@@ -28,6 +28,10 @@
 * **Servicio:** `PayPalService`
 * **Mail:** `OrderConfirmed`
 * **Vistas:** `orders/*.blade.php`
+* devolucion en hostorial de pedido 
+* genere una factura de la comprobacion del pago 
+* 
+
 
 ### 👤 Persona D: Calidad y Feedback (Misael)
 
