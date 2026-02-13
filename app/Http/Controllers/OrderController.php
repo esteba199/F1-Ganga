@@ -57,7 +57,11 @@ class OrderController extends Controller
             return back()->with('error', 'Solo se pueden generar facturas de pedidos pagados.');
         }
 
+        // Usamos la librería DomPDF para generar el PDF a partir de una vista Blade.
+        // 'invoices.order' es la plantilla HTML que se convertirá en PDF.
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('invoices.order', compact('order'));
+
+        // Forzamos la descarga del archivo con un nombre personalizado.
         return $pdf->download('factura-F1Ganga-' . $order->id . '.pdf');
     }
 
@@ -76,6 +80,8 @@ class OrderController extends Controller
 
         $transaction = $order->transaction;
         if (!$transaction || !$transaction->payment_details) {
+            // Sin detalles técnicos de PayPal, no podemos saber a qué ID reembolsar.
+            // Esto no debería pasar si la compra se hizo bien.
             return back()->with('error', 'No se encontraron detalles de la transacción para procesar la devolución.');
         }
 
@@ -93,7 +99,7 @@ class OrderController extends Controller
             return back()->with('error', 'No se pudo identificar el ID de captura de PayPal.');
         }
 
-        // Llamar al servicio para reembolsar
+        // Llamamos al servicio de PayPal para ejecutar el reembolso real en su plataforma.
         $refund = $this->payPalService->refundOrder($captureId);
 
         if ($refund && isset($refund['status']) && $refund['status'] === 'COMPLETED') {

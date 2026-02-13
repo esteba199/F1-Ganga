@@ -26,6 +26,7 @@ class CheckoutController extends Controller
      */
     public function index()
     {
+        /** @var \App\Models\User $user */
         $user = auth()->user();
         if (!$user) {
             return redirect()->route('login');
@@ -37,14 +38,17 @@ class CheckoutController extends Controller
             ->get();
 
         if ($cartItems->isEmpty()) {
+            // Freno de mano: No dejamos pagar si no hay nada en el carrito.
+            // Redirigimos al catálogo para que compre algo.
             return redirect()->route('cars.index')->with('error', 'Tu carrito está vacío.');
         }
 
-        // Calcular total
+        // Sumamos el precio de todos los items para saber cuánto cobrar al usuario.
         $total = $cartItems->sum(function ($item) {
             return $item->car->price * $item->quantity;
         });
 
+        // Mostramos la vista 'checkout.index' pasando los items y el total a pagar.
         return view('checkout.index', compact('cartItems', 'total'));
     }
 
@@ -54,6 +58,7 @@ class CheckoutController extends Controller
      */
     public function process()
     {
+        /** @var \App\Models\User $user */
         $user = auth()->user();
         $cartItems = Cart::where('user_id', $user->id)->with('car')->get();
 
@@ -65,12 +70,14 @@ class CheckoutController extends Controller
             return $item->car->price * $item->quantity;
         });
 
-        // Llamada al servicio de PayPal para crear la orden
+        // Llamada a nuestro servicio de PayPal (PayPalService) para crear la intención de pago.
+        // Esto contacta con la API de PayPal y nos devuelve un enlace para que el usuario apruebe.
         $orderData = $this->payPalService->createOrder($total);
 
-        // Si se crea correctamente, redirigir a la URL de aprobación
+        // Si PayPal nos responde bien y nos da los enlaces...
         if ($orderData && isset($orderData['links'])) {
             foreach ($orderData['links'] as $link) {
+                // Buscamos el enlace 'approve', que es a donde debemos mandar al usuario para que inicie sesión en PayPal.
                 if ($link['rel'] === 'approve') {
                     return redirect()->away($link['href']);
                 }
@@ -100,45 +107,46 @@ class CheckoutController extends Controller
             
             // Usar transacción de DB para asegurar integridad de datos
             return DB::transaction(function () use ($response) {
-                $user = auth()->user();
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
                 $cartItems = Cart::where('user_id', $user->id)->with('car')->get();
                 
                 $total = $cartItems->sum(function ($item) {
                     return $item->car->price * $item->quantity;
                 });
 
-                // 1. Crear registro de la Orden
+                // 1. Guardamos la Orden principal en la tabla 'orders'
                 $order = Order::create([
                     'user_id' => $user->id,
                     'total' => $total,
-                    'status' => 'paid',
-                    'payment_id' => $response['id'], // ID de transacción de PayPal
+                    'status' => 'paid', // ¡Importante! El estado nace como pagado
+                    'payment_id' => $response['id'], // Guardamos el ID de PayPal por referencia
                 ]);
 
-                // 2. Crear los Items de la Orden
+                // 2. Guardamos cada item comprado en 'order_items' para tener el detalle histórico
                 foreach ($cartItems as $item) {
                     OrderItem::create([
                         'order_id' => $order->id,
                         'car_id' => $item->car_id,
                         'quantity' => $item->quantity, 
-                        'price' => $item->car->price,
+                        'price' => $item->car->price, // Guardamos el precio al momento de la compra (por si cambia luego)
                     ]);
                 }
 
-                // 3. Registrar la Transacción (Migración de datos de PayPal)
+                // 3. Registramos la transacción técnica en 'transactions' para auditoría
                 \App\Models\Transaction::create([
                     'order_id' => $order->id,
                     'paypal_transaction_id' => $response['id'],
                     'amount' => $total,
                     'status' => 'completed',
                     'payment_method' => 'paypal',
-                    'payment_details' => $response, // Guardamos toda la respuesta JSON
+                    'payment_details' => $response, // Guardamos TODO el JSON de PayPal por si hay disputas
                 ]);
 
-                // 4. Vaciar el Carrito del usuario
+                // 4. Vaciamos el carrito porque ya se compró todo
                 Cart::where('user_id', $user->id)->delete();
 
-                // 5. Enviar Correo de Confirmación
+                // 5. Enviamos un correo bonito al usuario confirmando su compra
                 Mail::to($user->email)->send(new OrderConfirmed($order));
 
                 // Mostrar vista de éxito
