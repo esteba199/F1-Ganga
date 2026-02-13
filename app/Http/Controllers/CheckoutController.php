@@ -10,6 +10,8 @@ use App\Services\PayPalService;
 use App\Mail\OrderConfirmed;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 
 class CheckoutController extends Controller
@@ -26,8 +28,9 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        /** @var \App\Models\User $user */
-        $user = auth()->user();
+        /** @var User|null $user */
+        $user = Auth::user();
+        
         if (!$user) {
             return redirect()->route('login');
         }
@@ -58,8 +61,8 @@ class CheckoutController extends Controller
      */
     public function process()
     {
-        /** @var \App\Models\User $user */
-        $user = auth()->user();
+        /** @var User $user */
+        $user = Auth::user();
         $cartItems = Cart::where('user_id', $user->id)->with('car')->get();
 
         if ($cartItems->isEmpty()) {
@@ -106,9 +109,11 @@ class CheckoutController extends Controller
         if ($response && isset($response['status']) && $response['status'] === 'COMPLETED') {
             
             // Usar transacción de DB para asegurar integridad de datos
+            // Usar transacción de DB para asegurar integridad de datos
             return DB::transaction(function () use ($response) {
-        /** @var \App\Models\User $user */
-        $user = auth()->user();
+                /** @var User $user */
+                $user = Auth::user();
+                
                 $cartItems = Cart::where('user_id', $user->id)->with('car')->get();
                 
                 $total = $cartItems->sum(function ($item) {
