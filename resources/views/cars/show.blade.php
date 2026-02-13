@@ -52,10 +52,10 @@
                     
                     <div class="mb-4">
                         <span class="badge bg-white bg-opacity-10 fs-6 py-2 px-3 me-2">
-                            <i class="bi bi-building me-1"></i>{{ $car->brand->name }}
+                            <i class="bi bi-tag-fill text-warning me-1"></i>{{ $car->brand->name }}
                         </span>
                         <span class="badge bg-white bg-opacity-10 fs-6 py-2 px-3">
-                            <i class="bi bi-flag me-1"></i>{{ $car->team->name }}
+                            <i class="bi bi-flag-fill text-warning me-1"></i>{{ $car->team->name }}
                         </span>
                     </div>
 
@@ -123,18 +123,18 @@
                             @csrf
                             <div class="mb-3">
                                 <label for="rating" class="form-label text-warning fw-bold">Calificación</label>
-                                <select name="rating" id="rating" class="form-select" required>
-                                    <option value="">Selecciona...</option>
-                                    <option value="5">★★★★★ Excelente</option>
-                                    <option value="4">★★★★☆ Muy Bueno</option>
-                                    <option value="3">★★★☆☆ Bueno</option>
-                                    <option value="2">★★☆☆☆ Regular</option>
-                                    <option value="1">★☆☆☆☆ Malo</option>
+                                <select name="rating" id="rating" class="form-select glass border-white border-opacity-25" style="background-color: rgba(0,0,0,0.3) !important; color: white;" required>
+                                    <option value="" class="bg-dark">Selecciona...</option>
+                                    <option value="5" class="bg-dark">★★★★★ Excelente</option>
+                                    <option value="4" class="bg-dark">★★★★☆ Muy Bueno</option>
+                                    <option value="3" class="bg-dark">★★★☆☆ Bueno</option>
+                                    <option value="2" class="bg-dark">★★☆☆☆ Regular</option>
+                                    <option value="1" class="bg-dark">★☆☆☆☆ Malo</option>
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="comment" class="form-label text-warning fw-bold">Comentario</label>
-                                <textarea name="comment" id="comment" class="form-control" rows="4" required></textarea>
+                                <textarea name="comment" id="comment" class="form-control glass border-white border-opacity-25" rows="4" style="background-color: rgba(0,0,0,0.3) !important; color: white;" required></textarea>
                             </div>
                             <button type="submit" class="btn btn-warning fw-bold px-4">
                                 <i class="bi bi-send me-2"></i>Publicar Reseña

@@ -2,18 +2,20 @@
 
 @section('content')
 <div class="container animate__animated animate__fadeIn">
-    <div class="d-flex justify-content-between align-items-center mb-5">
-        <h1 class="display-5 fw-bold text-warning">
-            <i class="bi bi-cart3 me-2"></i>MI CARRITO
-        </h1>
-        @if($cartItems->count() > 0)
-            <form action="{{ route('cart.clear') }}" method="POST" onsubmit="return confirm('¿Vaciar todo el carrito?')">
-                @csrf
-                <button type="submit" class="btn btn-outline-danger rounded-pill px-4">
-                    <i class="bi bi-trash me-2"></i>Vaciar Carrito
-                </button>
-            </form>
-        @endif
+    <div class="container mb-5">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="display-5 fw-bold text-warning letter-spacing-2">
+                <i class="bi bi-cart3 me-2"></i>MI CARRITO
+            </h1>
+            @if($cartItems->count() > 0)
+                <form action="{{ route('cart.clear') }}" method="POST" onsubmit="return confirm('¿Vaciar todo el carrito?')">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-danger rounded-pill px-4">
+                        <i class="bi bi-trash me-2"></i>Vaciar Carrito
+                    </button>
+                </form>
+            @endif
+        </div>
     </div>
 
     @if(session('success'))

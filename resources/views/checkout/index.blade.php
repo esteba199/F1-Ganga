@@ -1,10 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container py-5">
+<div class="container animate__animated animate__fadeIn">
+    <div class="container mb-5 px-0">
+        <h1 class="display-5 fw-bold text-warning letter-spacing-2 mb-2">
+            <i class="bi bi-credit-card-2-front me-2"></i>FINALIZAR COMPRA
+        </h1>
+        <p class="text-white-50 lead">Completa tu pedido de forma segura.</p>
+    </div>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h2 class="mb-4 fw-bold text-warning"><i class="bi bi-credit-card-2-front me-2"></i>Finalizar Compra</h2>
             
             @if(session('error'))
                 <div class="alert alert-danger shadow-sm">

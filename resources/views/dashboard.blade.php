@@ -2,13 +2,11 @@
 
 @section('content')
 <div class="container animate__animated animate__fadeIn">
-    <div class="row mb-4">
-        <div class="col-12">
-            <h1 class="display-5 fw-bold text-warning mb-2">
-                <i class="bi bi-speedometer2 me-2"></i>Mi Panel
-            </h1>
-            <p class="text-white-50">Bienvenido de nuevo, <strong>{{ Auth::user()->name }}</strong></p>
-        </div>
+    <div class="container mb-5">
+        <h1 class="display-5 fw-bold text-warning letter-spacing-2 mb-2">
+            <i class="bi bi-speedometer2 me-2"></i>MI PANEL
+        </h1>
+        <p class="text-white-50 lead">Bienvenido de nuevo, <strong>{{ Auth::user()->name }}</strong></p>
     </div>
 
     <!-- Stats Cards -->

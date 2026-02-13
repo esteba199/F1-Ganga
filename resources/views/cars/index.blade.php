@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid px-4 mt-4">
     <div class="container mb-5">
-        <h1 class="display-4 fw-bold text-warning letter-spacing-2">
+        <h1 class="display-5 fw-bold text-warning letter-spacing-2 mb-2">
             <i class="bi bi-grid me-2"></i>CATÁLOGO F1
         </h1>
         <p class="text-white-50 lead">Explora nuestra selección exclusiva de monoplazas de leyenda.</p>
@@ -36,8 +36,8 @@
                                         <div>
                                             <h2 class="fw-bold text-warning mb-1">{{ $car->model }}</h2>
                                             <p class="text-white-50 fs-5 mb-0">
-                                                <i class="bi bi-building me-1"></i>{{ $car->brand->name }} • 
-                                                <i class="bi bi-flag ms-2 me-1"></i>{{ $car->team->name }}
+                                                <i class="bi bi-tag-fill text-warning me-1"></i>{{ $car->brand->name }} • 
+                                                <i class="bi bi-flag-fill text-warning ms-2 me-1"></i>{{ $car->team->name }}
                                             </p>
                                         </div>
                                         <div class="text-end">
@@ -51,31 +51,31 @@
                                     <!-- Technical Specs -->
                                     <div class="row g-3 mb-4">
                                         <div class="col-6 col-md-3">
-                                            <div class="spec-box p-3 rounded bg-white bg-opacity-5">
+                                            <div class="spec-box p-3 rounded glass bg-dark bg-opacity-25">
                                                 <i class="bi bi-speedometer text-warning fs-4 d-block mb-2"></i>
-                                                <small class="text-white-50 d-block text-uppercase letter-spacing-1">Top Speed</small>
-                                                <strong class="text-white h5 mb-0">{{ $car->top_speed ?? 'N/A' }} km/h</strong>
+                                                <small class="text-white-50 d-block text-uppercase letter-spacing-1" style="font-size: 0.65rem;">Top Speed</small>
+                                                <strong class="text-white h5 mb-0">{{ $car->top_speed ?? 'N/A' }} <small>km/h</small></strong>
                                             </div>
                                         </div>
                                         <div class="col-6 col-md-3">
-                                            <div class="spec-box p-3 rounded bg-white bg-opacity-5">
+                                            <div class="spec-box p-3 rounded glass bg-dark bg-opacity-25">
                                                 <i class="bi bi-lightning-charge text-warning fs-4 d-block mb-2"></i>
-                                                <small class="text-white-50 d-block text-uppercase letter-spacing-1">0-100</small>
-                                                <strong class="text-white h5 mb-0">{{ $car->acceleration ?? 'N/A' }} s</strong>
+                                                <small class="text-white-50 d-block text-uppercase letter-spacing-1" style="font-size: 0.65rem;">0-100</small>
+                                                <strong class="text-white h5 mb-0">{{ $car->acceleration ?? 'N/A' }} <small>s</small></strong>
                                             </div>
                                         </div>
                                         <div class="col-6 col-md-3">
-                                            <div class="spec-box p-3 rounded bg-white bg-opacity-5">
+                                            <div class="spec-box p-3 rounded glass bg-dark bg-opacity-25">
                                                 <i class="bi bi-gear text-warning fs-4 d-block mb-2"></i>
-                                                <small class="text-white-50 d-block text-uppercase letter-spacing-1">Power Unit</small>
-                                                <strong class="text-white h5 mb-0">{{ Str::limit($car->engine ?? 'N/A', 12) }}</strong>
+                                                <small class="text-white-50 d-block text-uppercase letter-spacing-1" style="font-size: 0.65rem;">Power Unit</small>
+                                                <strong class="text-white h6 mb-0">{{ Str::limit($car->engine ?? 'N/A', 10) }}</strong>
                                             </div>
                                         </div>
                                         <div class="col-6 col-md-3">
-                                            <div class="spec-box p-3 rounded bg-white bg-opacity-5">
+                                            <div class="spec-box p-3 rounded glass bg-dark bg-opacity-25">
                                                 <i class="bi bi-fire text-warning fs-4 d-block mb-2"></i>
-                                                <small class="text-white-50 d-block text-uppercase letter-spacing-1">Power</small>
-                                                <strong class="text-white h5 mb-0">{{ $car->horsepower ?? 'N/A' }} HP</strong>
+                                                <small class="text-white-50 d-block text-uppercase letter-spacing-1" style="font-size: 0.65rem;">Power</small>
+                                                <strong class="text-white h5 mb-0">{{ $car->horsepower ?? 'N/A' }} <small>HP</small></strong>
                                             </div>
                                         </div>
                                     </div>

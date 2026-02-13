@@ -9,6 +9,8 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' fill='%23ffc107' viewBox='0 0 16 16'><path d='M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641l2.5-8.5z'/></svg>">
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body class="bg-dark text-light">
@@ -47,7 +49,7 @@
                             <li class="nav-item position-relative">
                                 <a class="nav-link {{ request()->routeIs('cart.index') ? 'active text-warning' : 'text-white' }}" href="{{ route('cart.index') }}">
                                     <i class="bi bi-cart3 me-1"></i>Carrito
-                                    @php $cartCount = \App\Models\Cart::where('user_id', auth()->id())->count(); @endphp
+                                    @php $cartCount = \App\Models\Cart::where('user_id', auth()->id())->sum('quantity'); @endphp
                                     @if($cartCount > 0)
                                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.6rem; padding:0.2em 0.4em;">{{ $cartCount }}</span>
                                     @endif
@@ -96,7 +98,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-5">
             @yield('content')
         </main>
 

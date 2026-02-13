@@ -165,7 +165,14 @@ class DatabaseSeeder extends Seeder
             ],
         ];
 
+        $imageService = new \App\Services\ImageService();
+
         foreach ($cars as $carData) {
+            // Forzar búsqueda dinámica de imagen si hay API Key, si no mantiene la de Unsplash fija
+            $dynamicImage = $imageService->getCarImage($carData['model']);
+            if ($dynamicImage) {
+                $carData['image_url'] = $dynamicImage;
+            }
             Car::create($carData);
         }
 

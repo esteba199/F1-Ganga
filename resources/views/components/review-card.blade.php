@@ -11,7 +11,7 @@
                 @endfor
             </div>
         </div>
-        <div class="bg-white bg-opacity-5 p-3 rounded-3 position-relative">
+        <div class="bg-dark bg-opacity-50 p-3 rounded-3 position-relative border border-white border-opacity-10">
             <i class="bi bi-quote text-warning fs-3 position-absolute top-0 start-0 opacity-25" style="transform: translate(-5px, -10px);"></i>
             <p class="card-text text-light small mb-0 font-italic ps-3">
                 {{ $review->comment }}
