@@ -1,10 +1,10 @@
 <section>
     <header>
-        <h2 class="h5 mb-1">
+        <h2 class="h5 mb-1 text-warning fw-bold">
             {{ __('Update Password') }}
         </h2>
 
-        <p class="text-muted small mb-4">
+        <p class="text-white-50 small mb-4">
             {{ __('Ensure your account is using a long, random password to stay secure.') }}
         </p>
     </header>

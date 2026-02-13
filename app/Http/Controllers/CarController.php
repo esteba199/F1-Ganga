@@ -49,8 +49,9 @@ class CarController extends Controller
         }
 
         $cars = $query->paginate(12)->withQueryString();
+        $years = Car::select('year')->distinct()->orderBy('year', 'desc')->pluck('year');
 
-        return view('cars.search', compact('cars'));
+        return view('cars.search', compact('cars', 'years'));
     }
 
     public function create()
@@ -70,6 +71,11 @@ class CarController extends Controller
             'price' => 'required|numeric|min:0',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'top_speed' => 'nullable|integer|min:0',
+            'acceleration' => 'nullable|numeric|min:0',
+            'engine' => 'nullable|string|max:255',
+            'horsepower' => 'nullable|integer|min:0',
+            'transmission' => 'nullable|string|max:255',
         ]);
 
         // Handle image upload
@@ -106,6 +112,11 @@ class CarController extends Controller
             'price' => 'required|numeric|min:0',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'top_speed' => 'nullable|integer|min:0',
+            'acceleration' => 'nullable|numeric|min:0',
+            'engine' => 'nullable|string|max:255',
+            'horsepower' => 'nullable|integer|min:0',
+            'transmission' => 'nullable|string|max:255',
         ]);
 
         // Handle image upload

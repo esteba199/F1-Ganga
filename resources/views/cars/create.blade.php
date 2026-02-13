@@ -38,7 +38,7 @@
                 <div class="row mb-4">
                     <div class="col-md-6">
                         <label for="brand_id" class="form-label text-warning fw-bold">Marca</label>
-                        <select class="form-select" id="brand_id" name="brand_id" required>
+                        <select class="form-select bg-dark text-white border-white border-opacity-25" id="brand_id" name="brand_id" required>
                             <option value="">Selecciona una marca...</option>
                             @foreach($brands as $brand)
                                 <option value="{{ $brand->id }}" {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
@@ -49,7 +49,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="team_id" class="form-label text-warning fw-bold">Equipo</label>
-                        <select class="form-select" id="team_id" name="team_id" required>
+                        <select class="form-select bg-dark text-white border-white border-opacity-25" id="team_id" name="team_id" required>
                             <option value="">Selecciona un equipo...</option>
                             @foreach($teams as $team)
                                 <option value="{{ $team->id }}" {{ old('team_id') == $team->id ? 'selected' : '' }}>
@@ -57,6 +57,32 @@
                                 </option>
                             @endforeach
                         </select>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <label for="top_speed" class="form-label text-warning fw-bold">Velocidad Máxima (km/h)</label>
+                        <input type="number" class="form-control" id="top_speed" name="top_speed" value="{{ old('top_speed') }}" min="0">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="acceleration" class="form-label text-warning fw-bold">Aceleración 0-100 (s)</label>
+                        <input type="number" class="form-control" id="acceleration" name="acceleration" value="{{ old('acceleration') }}" min="0" step="0.1">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="horsepower" class="form-label text-warning fw-bold">Potencia (CV)</label>
+                        <input type="number" class="form-control" id="horsepower" name="horsepower" value="{{ old('horsepower') }}" min="0">
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="engine" class="form-label text-warning fw-bold">Motor</label>
+                        <input type="text" class="form-control" id="engine" name="engine" value="{{ old('engine') }}" placeholder="Ej: V6 Turbo Hybrid 1.6L">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="transmission" class="form-label text-warning fw-bold">Transmisión</label>
+                        <input type="text" class="form-control" id="transmission" name="transmission" value="{{ old('transmission') }}" placeholder="Ej: 8-speed semi-automatic">
                     </div>
                 </div>
 

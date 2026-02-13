@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' fill='%23ffc107' viewBox='0 0 16 16'><path d='M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641l2.5-8.5z'/></svg>">
+    
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body class="bg-dark text-light">
@@ -128,7 +129,7 @@
         </footer>
     <script>
         function addToCart(carId) {
-            fetch("{{ route('cart.store') }}", {
+            fetch(`${window.location.origin}/cart`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -137,7 +138,10 @@
                 },
                 body: JSON.stringify({ car_id: carId, quantity: 1 })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
                     const badge = document.getElementById('cart-badge');
@@ -145,6 +149,7 @@
                         badge.innerText = data.cartCount;
                         badge.classList.remove('d-none');
                     }
+                    // Optional: Show a subtle toast or message
                 }
             })
             .catch(error => console.error('Error:', error));

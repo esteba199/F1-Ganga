@@ -70,8 +70,13 @@ class CartController extends Controller
         }
 
         $request->validate([
-            'quantity' => 'required|integer|min:1|max:10',
+            'quantity' => 'required|integer|min:0|max:10',
         ]);
+
+        if ($request->quantity <= 0) {
+            $cart->delete();
+            return back()->with('success', 'Producto eliminado del carrito');
+        }
 
         $cart->update(['quantity' => $request->quantity]);
 

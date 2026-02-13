@@ -19,7 +19,7 @@
                         <label class="form-label text-white-50 small text-uppercase">Año</label>
                         <select name="year" class="form-select bg-dark text-white border-white border-opacity-25 py-2">
                             <option value="">Todos</option>
-                            @foreach(range(date('Y'), 2020) as $y)
+                            @foreach($years as $y)
                                 <option value="{{ $y }}" {{ request('year') == $y ? 'selected' : '' }}>{{ $y }}</option>
                             @endforeach
                         </select>

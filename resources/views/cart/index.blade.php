@@ -52,7 +52,7 @@
                                         @method('PATCH')
                                         <div class="input-group input-group-sm">
                                             <button type="button" class="btn btn-outline-warning" onclick="this.parentElement.querySelector('input').stepDown(); this.form.submit();">-</button>
-                                            <input type="number" name="quantity" class="form-control text-center" value="{{ $item->quantity }}" min="1" max="10" style="max-width: 60px;">
+                                            <input type="number" name="quantity" class="form-control text-center no-spinner" value="{{ $item->quantity }}" min="0" max="10" style="max-width: 60px;">
                                             <button type="button" class="btn btn-outline-warning" onclick="this.parentElement.querySelector('input').stepUp(); this.form.submit();">+</button>
                                         </div>
                                     </form>
