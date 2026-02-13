@@ -28,6 +28,7 @@ class PayPalService
      */
     protected function getAccessToken()
     {
+        /** @var \Illuminate\Http\Client\Response $response */
         $response = Http::withBasicAuth($this->clientId, $this->clientSecret)
             ->asForm()
             ->post("{$this->baseUrl}/v1/oauth2/token", [
@@ -35,7 +36,8 @@ class PayPalService
             ]);
 
         if ($response->successful()) {
-            return $response->json()['access_token'];
+            $data = json_decode($response->body(), true);
+            return $data['access_token'] ?? null;
         }
 
         return null;
@@ -53,6 +55,7 @@ class PayPalService
             return null;
         }
 
+        /** @var \Illuminate\Http\Client\Response $response */
         $response = Http::withToken($accessToken)
             ->post("{$this->baseUrl}/v2/checkout/orders", [
                 'intent' => 'CAPTURE',
@@ -74,7 +77,7 @@ class PayPalService
             ]);
 
         if ($response->successful()) {
-            return $response->json();
+            return json_decode($response->body(), true);
         }
 
         return null;
@@ -92,6 +95,7 @@ class PayPalService
             return null;
         }
 
+        /** @var \Illuminate\Http\Client\Response $response */
         $response = Http::withToken($accessToken)
             ->asJson()
             ->post("{$this->baseUrl}/v2/checkout/orders/{$orderId}/capture", [
@@ -101,7 +105,7 @@ class PayPalService
             ]);
 
         if ($response->successful()) {
-            return $response->json();
+            return json_decode($response->body(), true);
         }
 
         return null;
@@ -127,11 +131,12 @@ class PayPalService
             ];
         }
 
+        /** @var \Illuminate\Http\Client\Response $response */
         $response = Http::withToken($accessToken)
             ->post("{$this->baseUrl}/v2/payments/captures/{$captureId}/refund", $payload);
 
         if ($response->successful()) {
-            return $response->json();
+            return json_decode($response->body(), true);
         }
 
         return null;
