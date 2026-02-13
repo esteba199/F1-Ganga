@@ -14,8 +14,8 @@
     
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<body class="bg-dark text-light">
-    <div id="app">
+<body class="bg-dark text-light d-flex flex-column min-vh-100">
+    <div id="app" class="flex-grow-1">
         <!-- Redesigned Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark navbar-glass sticky-top shadow-sm">
             <div class="container-fluid px-4">
@@ -47,13 +47,11 @@
                                     <i class="bi bi-speedometer2 me-1"></i>Panel
                                 </a>
                             </li>
-                            <li class="nav-item position-relative">
+                            <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('cart.index') ? 'active text-warning' : 'text-white' }}" href="{{ route('cart.index') }}">
-                                    <i class="bi bi-cart3 me-1"></i>Carrito
+                                    <i class="bi bi-cart3 me-1"></i>
                                     @php $cartCount = \App\Models\Cart::where('user_id', auth()->id())->sum('quantity'); @endphp
-                                    <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle cart-badge {{ $cartCount > 0 ? '' : 'd-none' }}">
-                                        {{ $cartCount }}
-                                    </span>
+                                    <span id="cart-text">Carrito {{ $cartCount > 0 ? "($cartCount)" : '' }}</span>
                                 </a>
                             </li>
                         </ul>
@@ -144,10 +142,9 @@
             })
             .then(data => {
                 if (data.success) {
-                    const badge = document.getElementById('cart-badge');
-                    if (badge) {
-                        badge.innerText = data.cartCount;
-                        badge.classList.remove('d-none');
+                    const cartText = document.getElementById('cart-text');
+                    if (cartText) {
+                        cartText.innerText = `Carrito (${data.cartCount})`;
                     }
                     // Optional: Show a subtle toast or message
                 }
