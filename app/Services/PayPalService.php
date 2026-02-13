@@ -106,4 +106,34 @@ class PayPalService
 
         return null;
     }
+    /**
+     * Reembolsar un pago capturado.
+     * @param string $captureId ID de la captura (no el Order ID)
+     * @param float|null $amount Monto a reembolsar (null para reembolso total)
+     */
+    public function refundOrder($captureId, $amount = null)
+    {
+        $accessToken = $this->getAccessToken();
+
+        if (!$accessToken) {
+            return null;
+        }
+
+        $payload = [];
+        if ($amount) {
+            $payload['amount'] = [
+                'value' => number_format($amount, 2, '.', ''),
+                'currency_code' => 'EUR'
+            ];
+        }
+
+        $response = Http::withToken($accessToken)
+            ->post("{$this->baseUrl}/v2/payments/captures/{$captureId}/refund", $payload);
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        return null;
+    }
 }

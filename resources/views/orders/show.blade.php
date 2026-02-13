@@ -6,7 +6,19 @@
         <div class="col-md-8 animate__animated animate__fadeIn">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="fw-bold text-warning"><i class="bi bi-receipt me-2"></i>Detalle del Pedido #{{ $order->id }}</h2>
-                <a href="{{ route('orders.index') }}" class="btn btn-outline-light"><i class="bi bi-arrow-left me-2"></i>Volver</a>
+                <div>
+                     @if($order->status === 'paid' || $order->status === 'refunded')
+                        <a href="{{ route('orders.invoice', $order) }}" class="btn btn-primary me-2"><i class="bi bi-file-earmark-pdf me-2"></i>Factura</a>
+                    @endif
+                    
+                    @if($order->status === 'paid')
+                        <form action="{{ route('orders.refund', $order) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Estás seguro de que quieres solicitar la devolución de este pedido?');">
+                            @csrf
+                            <button type="submit" class="btn btn-danger me-2"><i class="bi bi-arrow-counterclockwise me-2"></i>Devolución</button>
+                        </form>
+                    @endif
+                    <a href="{{ route('orders.index') }}" class="btn btn-outline-light"><i class="bi bi-arrow-left me-2"></i>Volver</a>
+                </div>
             </div>
 
             <div class="card bg-dark text-white border-secondary shadow-lg">

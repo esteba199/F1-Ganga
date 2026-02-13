@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout/cancel', [CheckoutController::class, 'cancel'])->name('checkout.cancel');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::get('/orders/{order}/invoice', [OrderController::class, 'invoice'])->name('orders.invoice');
+    Route::post('/orders/{order}/refund', [OrderController::class, 'refund'])->name('orders.refund');
 
     // Misael - Reviews (User)
     Route::post('/cars/{car}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
