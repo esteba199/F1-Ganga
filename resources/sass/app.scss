@@ -131,6 +131,55 @@ body {
     -webkit-appearance: none;
     margin: 0;
 }
+
 .no-spinner {
     -moz-appearance: textfield;
+}
+
+// Custom Pagination Styling
+.pagination-glass {
+    .pagination {
+        margin-bottom: 0;
+        gap: 5px;
+
+        .page-item {
+            .page-link {
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                color: #ffc107;
+                border-radius: 10px;
+                padding: 10px 18px;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    background: rgba(255, 193, 7, 0.2);
+                    border-color: #ffc107;
+                    color: white;
+                    transform: translateY(-2px);
+                }
+
+                &:focus {
+                    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+                }
+            }
+
+            &.active {
+                .page-link {
+                    background: #ffc107;
+                    border-color: #ffc107;
+                    color: #000;
+                    font-weight: bold;
+                }
+            }
+
+            &.disabled {
+                .page-link {
+                    background: rgba(255, 255, 255, 0.02);
+                    border-color: rgba(255, 255, 255, 0.05);
+                    color: rgba(255, 255, 255, 0.2);
+                }
+            }
+        }
+    }
 }
