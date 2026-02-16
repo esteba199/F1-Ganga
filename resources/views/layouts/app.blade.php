@@ -12,11 +12,32 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' fill='%23ffc107' viewBox='0 0 16 16'><path d='M5.52.359A.5.5 0 0 1 6 0h4a.5.5 0 0 1 .474.658L8.694 6H12.5a.5.5 0 0 1 .395.807l-7 9a.5.5 0 0 1-.873-.454L6.823 9.5H3.5a.5.5 0 0 1-.48-.641l2.5-8.5z'/></svg>">
     
+    <style>
+        .btn-login-custom {
+            border: 2px solid #ffc107 !important;
+            color: #ffc107 !important;
+            transition: all 0.3s ease !important;
+        }
+        .btn-login-custom:hover {
+            background-color: #ffc107 !important;
+            color: #000 !important;
+        }
+        .btn-register-custom {
+            background-color: #ffc107 !important;
+            color: #000 !important;
+            border: 2px solid #ffc107 !important;
+            transition: all 0.3s ease !important;
+        }
+        .btn-register-custom:hover {
+            background-color: #e5ac00 !important;
+            border-color: #e5ac00 !important;
+            color: #000 !important;
+        }
+    </style>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body class="bg-dark text-light d-flex flex-column min-vh-100">
-    <div id="app" class="flex-grow-1">
-        <!-- Redesigned Navbar -->
+    <div id="app" class="d-flex flex-column min-vh-100">
         <nav class="navbar navbar-expand-lg navbar-dark navbar-glass sticky-top shadow-sm">
             <div class="container-fluid px-4">
                 <!-- Logo (Left) -->
@@ -84,12 +105,12 @@
                         </ul>
                     @else
                         <!-- Guest: Login/Register -->
-                        <ul class="navbar-nav ms-auto">
+                        <ul class="navbar-nav ms-auto gap-3">
                             <li class="nav-item">
-                                <a class="nav-link btn btn-outline-warning rounded-pill px-3" href="{{ route('login') }}">Acceder</a>
+                                <a class="btn btn-login-custom rounded-pill px-4 py-2 fw-bold" href="{{ route('login') }}">Acceder</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link btn btn-warning text-dark btn-sm ms-2 px-3 fw-bold" href="{{ route('register') }}">Únete</a>
+                                <a class="btn btn-register-custom rounded-pill px-4 py-2 fw-bold shadow-sm" href="{{ route('register') }}">Únete</a>
                             </li>
                         </ul>
                     @endauth
@@ -97,7 +118,7 @@
             </div>
         </nav>
 
-        <main class="py-5">
+        <main class="py-5 flex-grow-1">
             @yield('content')
         </main>
 
@@ -152,5 +173,7 @@
             .catch(error => console.error('Error:', error));
         }
     </script>
+    @stack('modals')
+    @stack('scripts')
 </body>
 </html>

@@ -60,13 +60,52 @@
                     </div>
 
                     <div class="row mb-4">
-                        <div class="col-6">
+                        <div class="col-6 mb-3">
                             <div class="text-white-50 small">Año</div>
                             <div class="fs-4 fw-bold text-warning">{{ $car->year }}</div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 mb-3">
                             <div class="text-white-50 small">Precio</div>
                             <div class="fs-4 fw-bold text-warning">{{ number_format($car->price, 0, ',', '.') }}€</div>
+                        </div>
+                    </div>
+
+                    <!-- Technical Specs Grid -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-6">
+                            <div class="p-3 rounded glass bg-dark bg-opacity-25 border border-white border-opacity-10">
+                                <i class="bi bi-speedometer text-warning fs-4 d-block mb-1"></i>
+                                <span class="text-white-50 small d-block uppercase fw-bold">Velocidad</span>
+                                <span class="text-white fw-bold fs-5">{{ $car->top_speed ?? '---' }} <small class="text-white-50 fw-normal">km/h</small></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3 rounded glass bg-dark bg-opacity-25 border border-white border-opacity-10">
+                                <i class="bi bi-lightning-charge text-warning fs-4 d-block mb-1"></i>
+                                <span class="text-white-50 small d-block uppercase fw-bold">0-100</span>
+                                <span class="text-white fw-bold fs-5">{{ $car->acceleration ?? '---' }} <small class="text-white-50 fw-normal">s</small></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3 rounded glass bg-dark bg-opacity-25 border border-white border-opacity-10">
+                                <i class="bi bi-gear text-warning fs-4 d-block mb-1"></i>
+                                <span class="text-white-50 small d-block uppercase fw-bold">Motor</span>
+                                <span class="text-white fw-bold fs-5">{{ $car->engine ?? '---' }}</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3 rounded glass bg-dark bg-opacity-25 border border-white border-opacity-10">
+                                <i class="bi bi-fire text-warning fs-4 d-block mb-1"></i>
+                                <span class="text-white-50 small d-block uppercase fw-bold">Potencia</span>
+                                <span class="text-white fw-bold fs-5">{{ $car->horsepower ?? '---' }} <small class="text-white-50 fw-normal">HP</small></span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="p-3 rounded glass bg-dark bg-opacity-25 border border-white border-opacity-10">
+                                <i class="bi bi-gear-wide-connected text-warning fs-4 d-block mb-1"></i>
+                                <span class="text-white-50 small d-block uppercase fw-bold">Transmisión</span>
+                                <span class="text-white fw-bold fs-5">{{ $car->transmission ?? '---' }}</span>
+                            </div>
                         </div>
                     </div>
 

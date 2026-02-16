@@ -51,45 +51,45 @@
                                     <!-- Technical Specs (2x2 Grid) -->
                                     <div class="row g-2 mb-4">
                                         <div class="col-6">
-                                            <div class="spec-box p-2 rounded glass bg-dark bg-opacity-25 border border-white border-opacity-10">
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <i class="bi bi-speedometer text-warning fs-5"></i>
+                                            <div class="spec-box p-3 rounded glass bg-dark bg-opacity-25 border border-white border-opacity-10">
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <i class="bi bi-speedometer text-warning fs-4"></i>
                                                     <div>
-                                                        <small class="text-white-50 d-block text-uppercase" style="font-size: 0.6rem;">SPEED</small>
-                                                        <strong class="text-white small">{{ $car->top_speed ?? '---' }} km/h</strong>
+                                                        <small class="text-white-50 d-block text-uppercase fw-bold" style="font-size: 0.75rem;">SPEED</small>
+                                                        <span class="text-white fw-bold fs-5">{{ $car->top_speed ?? '---' }} <span class="fs-6 fw-normal text-white-50">km/h</span></span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-6">
-                                            <div class="spec-box p-2 rounded glass bg-dark bg-opacity-25 border border-white border-opacity-10">
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <i class="bi bi-lightning-charge text-warning fs-5"></i>
+                                            <div class="spec-box p-3 rounded glass bg-dark bg-opacity-25 border border-white border-opacity-10">
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <i class="bi bi-lightning-charge text-warning fs-4"></i>
                                                     <div>
-                                                        <small class="text-white-50 d-block text-uppercase" style="font-size: 0.6rem;">0-100</small>
-                                                        <strong class="text-white small">{{ $car->acceleration ?? '---' }} s</strong>
+                                                        <small class="text-white-50 d-block text-uppercase fw-bold" style="font-size: 0.75rem;">0-100</small>
+                                                        <span class="text-white fw-bold fs-5">{{ $car->acceleration ?? '---' }} <span class="fs-6 fw-normal text-white-50">s</span></span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-6">
-                                            <div class="spec-box p-2 rounded glass bg-dark bg-opacity-25 border border-white border-opacity-10">
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <i class="bi bi-gear text-warning fs-5"></i>
+                                            <div class="spec-box p-3 rounded glass bg-dark bg-opacity-25 border border-white border-opacity-10">
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <i class="bi bi-gear text-warning fs-4"></i>
                                                     <div>
-                                                        <small class="text-white-50 d-block text-uppercase" style="font-size: 0.6rem;">ENGINE</small>
-                                                        <strong class="text-white small">{{ Str::limit($car->engine ?? '---', 12) }}</strong>
+                                                        <small class="text-white-50 d-block text-uppercase fw-bold" style="font-size: 0.75rem;">ENGINE</small>
+                                                        <span class="text-white fw-bold fs-5">{{ Str::limit($car->engine ?? '---', 10) }}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-6">
-                                            <div class="spec-box p-2 rounded glass bg-dark bg-opacity-25 border border-white border-opacity-10">
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <i class="bi bi-fire text-warning fs-5"></i>
+                                            <div class="spec-box p-3 rounded glass bg-dark bg-opacity-25 border border-white border-opacity-10">
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <i class="bi bi-fire text-warning fs-4"></i>
                                                     <div>
-                                                        <small class="text-white-50 d-block text-uppercase" style="font-size: 0.6rem;">POWER</small>
-                                                        <strong class="text-white small">{{ $car->horsepower ?? '---' }} HP</strong>
+                                                        <small class="text-white-50 d-block text-uppercase fw-bold" style="font-size: 0.75rem;">POWER</small>
+                                                        <span class="text-white fw-bold fs-5">{{ $car->horsepower ?? '---' }} <span class="fs-6 fw-normal text-white-50">HP</span></span>
                                                     </div>
                                                 </div>
                                             </div>

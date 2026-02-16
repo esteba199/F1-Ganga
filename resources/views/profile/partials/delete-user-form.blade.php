@@ -14,20 +14,21 @@
         data-bs-target="#confirmUserDeletion"
     >{{ __('Delete Account') }}</x-danger-button>
 
+    @push('modals')
     <div class="modal fade" id="confirmUserDeletion" tabindex="-1" aria-labelledby="confirmUserDeletionLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content bg-dark text-light border-secondary shadow-lg">
                 <form method="post" action="{{ route('profile.destroy') }}">
                     @csrf
                     @method('delete')
 
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="confirmUserDeletionLabel">{{ __('Are you sure you want to delete your account?') }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-header border-secondary">
+                        <h5 class="modal-title" id="confirmUserDeletionLabel text-warning">{{ __('Are you sure you want to delete your account?') }}</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
-                        <p class="text-muted small">
+                        <p class="text-white-50">
                             {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
                         </p>
 
@@ -38,6 +39,7 @@
                                 id="password"
                                 name="password"
                                 type="password"
+                                class="form-control bg-dark text-light border-secondary w-100"
                                 placeholder="{{ __('Password') }}"
                             />
 
@@ -45,17 +47,18 @@
                         </div>
                     </div>
 
-                    <div class="modal-footer">
-                        <x-secondary-button data-bs-dismiss="modal">
+                    <div class="modal-footer border-secondary">
+                        <button type="button" class="btn btn-outline-light px-4" data-bs-dismiss="modal">
                             {{ __('Cancel') }}
-                        </x-secondary-button>
+                        </button>
 
-                        <x-danger-button>
+                        <button type="submit" class="btn btn-danger px-4 fw-bold">
                             {{ __('Delete Account') }}
-                        </x-danger-button>
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    @endpush
 </section>
