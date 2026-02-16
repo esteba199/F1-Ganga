@@ -90,8 +90,10 @@
             @endforeach
         </div>
 
-        <div class="container mt-5">
-            {{ $cars->links() }}
+        <div class="d-flex justify-content-center mt-5 mb-5">
+            <div class="pagination-glass">
+                {{ $cars->links() }}
+            </div>
         </div>
     @else
         <div class="text-center py-5">
