@@ -28,6 +28,8 @@
                         <span class="badge bg-success rounded-pill px-3">Pagado</span>
                     @elseif($order->status === 'pending')
                         <span class="badge bg-warning text-dark rounded-pill px-3">Pendiente</span>
+                    @elseif($order->status === 'refunded')
+                        <span class="badge bg-info text-dark rounded-pill px-3">Devuelto</span>
                     @else
                         <span class="badge bg-secondary rounded-pill px-3">{{ ucfirst($order->status) }}</span>
                     @endif
@@ -55,7 +57,7 @@
                                                         <i class="bi bi-car-front-fill"></i>
                                                     </div>
                                                 @endif
-                                                <div>
+                                                <div class="{{ $order->status === 'refunded' ? 'text-decoration-line-through text-white-50' : '' }}">
                                                     <div class="fw-bold">{{ $item->car->brand->name ?? 'Marca' }} {{ $item->car->model }}</div>
                                                     <small class="text-muted">{{ $item->car->team->name ?? 'Equipo' }}</small>
                                                 </div>
@@ -69,8 +71,8 @@
                             </tbody>
                             <tfoot class="border-top border-secondary">
                                 <tr>
-                                    <td colspan="3" class="text-end fw-bold fs-5">Total Pagado:</td>
-                                    <td class="text-end fw-bold fs-4 text-warning">{{ number_format($order->total, 2) }} €</td>
+                                    <td colspan="3" class="text-end fw-bold fs-5">{{ $order->status === 'refunded' ? 'Total Reembolsado:' : 'Total Pagado:' }}</td>
+                                    <td class="text-end fw-bold fs-4 {{ $order->status === 'refunded' ? 'text-info' : 'text-warning' }}">{{ number_format($order->total, 2) }} €</td>
                                 </tr>
                             </tfoot>
                         </table>

@@ -136,6 +136,9 @@ class CheckoutController extends Controller
                         'quantity' => $item->quantity, 
                         'price' => $item->car->price, // Guardamos el precio al momento de la compra (por si cambia luego)
                     ]);
+
+                    // Reducir stock del coche
+                    $item->car->decrement('quantity', $item->quantity);
                 }
 
                 // 3. Registramos la transacción técnica en 'transactions' para auditoría

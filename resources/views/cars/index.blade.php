@@ -25,6 +25,9 @@
                                             <i class="bi bi-car-front display-1 text-warning opacity-25"></i>
                                         </div>
                                     @endif
+                                    @if($car->quantity <= 0)
+                                        <div class="position-absolute top-0 end-0 m-3 badge bg-dark text-white fw-bold py-2 px-3 shadow" style="z-index: 10;">SIN STOCK</div>
+                                    @endif
                                     <span class="position-absolute top-0 start-0 m-3 badge bg-danger text-uppercase fw-bold py-2 px-3 shadow">{{ $car->year }}</span>
                                 </div>
                             </div>
@@ -102,9 +105,15 @@
                                             <i class="bi bi-eye me-2"></i>VER DETALLES
                                         </a>
                                         @auth
-                                            <button onclick="addToCart({{ $car->id }})" class="btn btn-warning btn-lg fw-bold flex-grow-1">
-                                                <i class="bi bi-cart-plus me-2"></i>AÑADIR AL CARRITO
-                                            </button>
+                                            @if($car->quantity > 0)
+                                                <button onclick="addToCart({{ $car->id }})" class="btn btn-warning btn-lg fw-bold flex-grow-1">
+                                                    <i class="bi bi-cart-plus me-2"></i>AÑADIR AL CARRITO
+                                                </button>
+                                            @else
+                                                <button class="btn btn-secondary btn-lg fw-bold flex-grow-1" disabled>
+                                                    <i class="bi bi-x-circle me-2"></i>AGOTADO
+                                                </button>
+                                            @endif
                                         @endauth
                                     </div>
                                 </div>

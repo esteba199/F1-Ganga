@@ -106,7 +106,11 @@
                                             <h6 class="mb-1 text-warning">Pedido #{{ $order->id }}</h6>
                                             <small class="text-white-50">{{ $order->created_at->diffForHumans() }}</small>
                                         </div>
-                                        <span class="badge bg-success">{{ number_format($order->total, 2) }}€</span>
+                                        @if($order->status === 'refunded')
+                                            <span class="badge bg-info text-dark">Reembolsado</span>
+                                        @else
+                                            <span class="badge bg-success">{{ number_format($order->total, 2) }}€</span>
+                                        @endif
                                     </div>
                                 </div>
                             @endforeach

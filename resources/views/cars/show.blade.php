@@ -79,9 +79,15 @@
 
                     @auth
                         <div class="d-grid gap-2">
-                            <button onclick="addToCart({{ $car->id }})" class="btn btn-warning btn-lg fw-bold">
-                                <i class="bi bi-cart-plus me-2"></i>Añadir al Carrito
-                            </button>
+                            @if($car->quantity > 0)
+                                <button onclick="addToCart({{ $car->id }})" class="btn btn-warning btn-lg fw-bold">
+                                    <i class="bi bi-cart-plus me-2"></i>Añadir al Carrito
+                                </button>
+                            @else
+                                <button class="btn btn-secondary btn-lg fw-bold" disabled>
+                                    <i class="bi bi-x-circle me-2"></i>Producto Agotado
+                                </button>
+                            @endif
                         </div>
                     @else
                         <div class="d-grid gap-2">

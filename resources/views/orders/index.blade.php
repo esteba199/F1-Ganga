@@ -38,6 +38,8 @@
                                             <span class="badge bg-warning text-dark rounded-pill px-3"><i class="bi bi-hourglass-split me-1"></i>Pendiente</span>
                                         @elseif($order->status === 'cancelled')
                                             <span class="badge bg-danger rounded-pill px-3"><i class="bi bi-x-circle-fill me-1"></i>Cancelado</span>
+                                        @elseif($order->status === 'refunded')
+                                            <span class="badge bg-info text-dark rounded-pill px-3"><i class="bi bi-arrow-counterclockwise me-1"></i>Devuelto</span>
                                         @else
                                             <span class="badge bg-secondary rounded-pill px-3">{{ ucfirst($order->status) }}</span>
                                         @endif

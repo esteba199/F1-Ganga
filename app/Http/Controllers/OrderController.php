@@ -108,7 +108,14 @@ class OrderController extends Controller
             $order->update(['status' => 'refunded']);
             $transaction->update(['status' => 'refunded']);
 
-            return back()->with('success', 'El reembolso se ha procesado correctamente.');
+            // Restaurar stock de los coches
+            foreach ($order->items as $item) {
+                if ($item->car) {
+                    $item->car->increment('quantity', $item->quantity);
+                }
+            }
+
+            return back()->with('success', 'El reembolso se ha procesado correctamente y el stock ha sido restaurado.');
         }
 
         return back()->with('error', 'Error al procesar el reembolso con PayPal.');
