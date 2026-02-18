@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
+// Servicio para subir imágenes a Cloudinary
 class CloudinaryService
 {
-    // TODO: Implement image upload logic
+    // Falta hacer la lógica de subir imagen
 }
