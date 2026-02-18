@@ -9,11 +9,15 @@ use App\Models\Team;
 use App\Models\Car;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * Seeder Principal de la Base de Datos.
+ * Coordina la ejecución de todos los seeders específicos y crea usuarios de prueba.
+ */
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // 1. Admin & Users
+        // 1. Usuarios y Administradores: Preparamos el acceso al sistema
         $this->command->info('Seeding Users...');
         $admin = User::updateOrCreate(
             ['email' => 'admin@f1ganga.com'],
@@ -36,7 +40,7 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->count(10)->create();
 
-        // 2. Core Entities (Brands, Teams, Cars)
+        // 2. Entidades del "Core" (Marcas, Equipos, Coches): El corazón del catálogo
         $this->command->info('Seeding Brands, Teams and Cars...');
         $this->call([
             BrandSeeder::class,
@@ -44,7 +48,7 @@ class DatabaseSeeder extends Seeder
             CarSeeder::class,
         ]);
 
-        // 3. Transactions (Orders, Items, Transactions)
+        // 3. Transacciones y Reseñas: Datos de actividad del usuario
         $this->command->info('Seeding Orders and Transactions...');
         $this->call([
             OrderSeeder::class,

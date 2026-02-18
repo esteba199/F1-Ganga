@@ -21,7 +21,7 @@
 
     <div class="card glass border-0 shadow-lg">
         <div class="card-body p-5">
-            <form method="POST" action="{{ route('cars.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('admin.cars.store') }}" enctype="multipart/form-data">
                 @csrf
                 
                 <div class="row mb-4">

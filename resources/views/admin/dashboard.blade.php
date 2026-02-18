@@ -106,7 +106,7 @@
             <div class="card glass border-0 shadow-lg">
                 <div class="card-body p-4">
                     <div class="d-flex gap-3 justify-content-center">
-                        <a href="{{ route('cars.create') }}" class="btn btn-warning text-dark fw-bold px-4 rounded-pill">
+                        <a href="{{ route('admin.cars.create') }}" class="btn btn-warning text-dark fw-bold px-4 rounded-pill">
                             <i class="bi bi-plus-lg me-2"></i>Añadir Coche
                         </a>
                         <a href="{{ route('admin.reviews.index') }}" class="btn btn-outline-warning fw-bold px-4 rounded-pill">

@@ -21,9 +21,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-// Julio - Cars CRUD
+// Julio - Cars CRUD (Public)
 Route::get('/cars/search', [CarController::class, 'search'])->name('cars.search');
-Route::resource('cars', CarController::class);
+Route::resource('cars', CarController::class)->only(['index', 'show']);
 
 Route::middleware('auth')->group(function () {
     // Jairo - Profile
@@ -57,6 +57,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+    
+    // Julio - Cars CRUD (Admin)
+    Route::resource('cars', CarController::class)->except(['index', 'show']);
 });
 
 require __DIR__.'/auth.php';

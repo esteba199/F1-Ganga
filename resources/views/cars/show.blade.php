@@ -8,12 +8,12 @@
             <i class="bi bi-arrow-left me-2"></i>Volver al Catálogo
         </a>
         @auth
-            @if(Auth::id() === $car->user_id || Auth::user()->is_admin)
+            @if(Auth::user()->is_admin)
                 <div class="btn-group">
-                    <a href="{{ route('cars.edit', $car) }}" class="btn btn-warning">
+                    <a href="{{ route('admin.cars.edit', $car) }}" class="btn btn-warning">
                         <i class="bi bi-pencil me-1"></i>Editar
                     </a>
-                    <form action="{{ route('cars.destroy', $car) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este coche?')">
+                    <form action="{{ route('admin.cars.destroy', $car) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este coche?')">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-outline-danger">

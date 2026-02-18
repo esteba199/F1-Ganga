@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Modelo de Reseña.
+ * Representa la valoración y comentario que un usuario deja sobre un coche.
+ */
 class Review extends Model
 {
     use HasFactory, SoftDeletes;

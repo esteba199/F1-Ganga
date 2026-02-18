@@ -1,154 +1,86 @@
-# 🏎️ F1 Ganga - Reparto de Responsabilidades
+# 🏎️ F1 Ganga - Reparto de Roles
 
-### 👤 Persona A: Cimientos y Acceso (Jairo)
-
-**Foco:** Seguridad, usuarios y la base del proyecto.
-
-* **Modelos:** `User`
-* **Controladores:** `ProfileController`, `Auth/*` (Breeze/Jetstream)
-* **Migraciones:** `users` (añadir campos extra si es necesario)
-* **Rutas:** `auth.php`, `web.php` (perfil)
-
-### 👤 Persona B: El Core - CRUD F1 (Julio)
-
-**Foco:** Gestión de la entidad principal y media.
-
-* **Modelos:** `Car`, `Team`, `Brand`
-* **Controlador:** `CarController` (Gestiona también marcas/equipos para no crear 4 controladores)
-* **Servicio:** `CloudinaryService` (Carga de imágenes)
-* **Vistas:** `cars/*.blade.php` (Index, Create, Edit, Show)
-* **Validación:** `CarRequest`
-
-### 👤 Persona C: Transacciones y Pagos (Esteban)
-
-**Foco:** El flujo de dinero y pedidos.
- 
-* **Modelos:** `Order`, `OrderItem`
-* **Controladores:** `CheckoutController` (Integra PayPal), `OrderController` (Historial)
-* **Servicio:** `PayPalService`
-* **Mail:** `OrderConfirmed`
-* **Vistas:** `orders/*.blade.php`
-* devolucion en hostorial de pedido 
-* genere una factura de la comprobacion del pago 
-* 
-
-
-### 👤 Persona D: Calidad y Feedback (Misael)
-
-**Foco:** Reseñas, administración y pulido final.
-
-* **Modelos:** `Review`
-* **Controladores:** `ReviewController`, `AdminDashboardController`
-* **Seeders:** `DatabaseSeeder` (Centraliza los de todos)
-* **Vistas:** `admin/*.blade.php`, componentes de `Review`
-* **Global:** UI/UX (Tailwind/Bootstrap) y SoftDeletes.
-
-
-## 📂 Estructura de Archivos
-```
+## 📂 Estructura de Archivos (Asignación Core)
 app/
 ├── Http/Controllers/
-│   ├── Auth/ ... (Jairo)
+│   ├── AdminDashboardController.php (Misael)
 │   ├── CarController.php (Julio)
+│   ├── CartController.php (Esteban)
 │   ├── CheckoutController.php (Esteban)
-│   ├── ReviewController.php (Misael)
-│   └── ProfileController.php (Jairo)
+│   ├── OrderController.php (Esteban)
+│   ├── ProfileController.php (Jairo)
+│   └── ReviewController.php (Misael)
 │
 ├── Models/
-│   ├── User.php, Car.php, Team.php, Order.php, Review.php
+│   ├── User.php (Jairo)
+│   ├── Car.php, Team.php, Brand.php (Julio)
+│   └── Order.php, OrderItem.php, Review.php, Cart.php (Esteban/Misael)
 │
 ├── Services/
 │   ├── CloudinaryService.php (Julio)
 │   └── PayPalService.php (Esteban)
 │
-└── Mail/
-    └── OrderConfirmed.php (Esteban)
+└── Middleware/
+    └── AdminMiddleware.php (Misael)
 
 database/
-├── migrations/
-│   ├── 01_create_users_table.php
-│   ├── 02_create_cars_and_teams_tables.php (Julio - puede unirlas)
-│   ├── 03_create_orders_table.php (Esteban)
-│   └── 04_create_reviews_table.php (Misael)
-│
+├── migrations/ (Repartidas por entidad)
 └── seeders/
-    └── DatabaseSeeder.php (Misael - El "Director de Orquesta")
+    └── DatabaseSeeder.php (Misael - Coordinación)
 
 resources/views/
-├── cars/ ... (Julio)
-├── orders/ ... (Esteban)
-├── admin/ ... (Misael)
-└── components/ (Misael/Todos)
+├── admin/ (Misael)
+├── auth/ (Jairo)
+├── cars/ (Julio)
+├── cart/ (Esteban)
+├── checkout/ (Esteban)
+├── orders/ (Esteban)
+└── layouts/ (Misael)
 
 routes/
 ├── web.php (Misael/Todos)
 └── auth.php (Jairo)
-```
 
 
-### 👤 Jairo (Autenticación y Perfil)
+### 👤 Jairo: Cimientos y Acceso
+**Foco:** Seguridad, usuarios y la base del proyecto.
 
-Se encarga de todo lo que viene por defecto con el kit de inicio (Breeze/Jetstream) y la gestión del usuario.
+* **Responsabilidades:**
+    * Modelo de Usuario (`app/Models/User.php`).
+    * Gestión de usuarios y perfiles (`ProfileController`).
+    * Sistema de autenticación y verificación de email (`routes/auth.php`).
+    * Vistas de Auth y Perfil (`resources/views/auth/`, `resources/views/profile/`).
+    * Estructura inicial de la base de datos (Migración `users`).
+    * Seeders primarios (`UserSeeder`).
 
-* `resources/views/auth/`
-* `login.blade.php` (Acceso)
-* `register.blade.php` (Registro)
-* `verify-email.blade.php` (Verificación)
+### 👤 Julio: El Core - CRUD F1
+**Foco:** Gestión de la entidad principal y media.
 
+* **Responsabilidades:**
+    * Modelos principales (`Car.php`, `Brand.php`, `Team.php`).
+    * Catálogo y CRUD de coches (`CarController`).
+    * Validación de datos (`app/Http/Requests/CarRequest.php`).
+    * Integración con Cloudinary para imágenes (`CloudinaryService`).
+    * Vistas del listado y detalles (`resources/views/cars/`).
+    * Migraciones de Coches y Equipos.
 
-* `resources/views/profile/`
-* `edit.blade.php` (Editar datos del usuario)
+### 👤 Esteban: Transacciones y Pagos
+**Foco:** El flujo de dinero y pedidos.
 
+* **Responsabilidades:**
+    * Modelos de compra (`Order.php`, `OrderItem.php`, `Cart.php`, `Transaction.php`).
+    * Sistema de pago e integración con PayPal (`CheckoutController`, `PayPalService`).
+    * Gestión de pedidos e historial (`OrderController`).
+    * Lógica y vistas del carrito y checkout (`resources/views/cart/`, `checkout/`).
+    * Generación de facturas (`invoices/order.blade.php`).
 
+### 👤 Misael: Calidad y Feedback
+**Foco:** Reseñas, administración e integración global.
 
----
-
-### 👤 Julio (El Catálogo de Coches)
-
-Se encarga de la parte visual del CRUD principal y la subida de fotos.
-
-* `resources/views/cars/`
-* `index.blade.php` (Listado con filtros y paginación)
-* `show.blade.php` (Detalle del coche y ficha técnica)
-* `create.blade.php` (Formulario de subida + Cloudinary)
-* `edit.blade.php` (Edición de datos)
-
-
-
----
-
-### 👤 Esteban (Flujo de Compra)
-
-Se encarga de la experiencia desde que el usuario decide comprar hasta que recibe el correo.
-
-* `resources/views/checkout/`
-* `index.blade.php` (Resumen del pedido y botón de PayPal)
-* `success.blade.php` (Mensaje de éxito tras el pago)
-
-
-* `resources/views/orders/`
-* `index.blade.php` (Historial de compras del usuario)
-
-
-* `resources/views/emails/`
-* `order-confirmed.blade.php` (Plantilla del correo)
-
-
-
----
-
-### 👤 Misael (Admin y Componentes Globales)
-
-Se encarga de la "cáscara" del proyecto y el panel de control.
-
-* `resources/views/layouts/`
-* `app.blade.php` (El layout principal, Navbar y Footer)
-
-
-* `resources/views/admin/`
-* `dashboard.blade.php` (Métricas y gestión global)
-
-
-* `resources/views/components/`
-* `review-card.blade.php` (Caja de comentarios/estrellas)
-* `input-error.blade.php` (Y otros componentes UI compartidos)
+* **Responsabilidades:**
+    * Modelo de Reseñas (`app/Models/Review.php`).
+    * Panel de administración y métricas (`AdminDashboardController`).
+    * Moderación de reseñas (`ReviewController`, `resources/views/admin/`).
+    * Layout principal y componentes UI (`layouts/app.blade.php`, `components/`).
+    * Seguridad de rutas administrativas (`AdminMiddleware`).
+    * Coordinación de Seeders (`DatabaseSeeder.php`).

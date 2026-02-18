@@ -21,7 +21,7 @@
 
     <div class="card glass border-0 shadow-lg">
         <div class="card-body p-5">
-            <form method="POST" action="{{ route('cars.update', $car) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('admin.cars.update', $car) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
                 
