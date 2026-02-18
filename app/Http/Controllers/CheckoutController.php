@@ -46,7 +46,7 @@ class CheckoutController extends Controller
             return redirect()->route('cars.index')->with('error', 'Tu carrito está vacío.');
         }
 
-        // Sumamos el precio de todos los items para saber cuánto cobrar al usuario.
+        // Sumamos el precio de todos los items para saber cuánto cobrar al usuario.(total a pagar - importante))
         $total = $cartItems->sum(function ($item) {
             return $item->car->price * $item->quantity;
         });

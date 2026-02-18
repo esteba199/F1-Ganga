@@ -11,46 +11,46 @@ class CartController extends Controller
     // Ver carrito
     public function index()
     {
-        $cartItems = Cart::with('car.brand', 'car.team')
-            ->where('user_id', auth()->id())
+        $cartItems = Cart::with('car.brand', 'car.team') // Cargar relaciones para mostrar detalles del coche
+            ->where('user_id', auth()->id()) // Solo mostrar los items del usuario autenticado
             ->get();
         
-        $total = $cartItems->sum(function ($item) {
-            return $item->car->price * $item->quantity;
+        $total = $cartItems->sum(function ($item) { 
+            return $item->car->price * $item->quantity; // Calcular el total sumando el precio de cada coche por su cantidad
         });
 
-        return view('cart.index', compact('cartItems', 'total'));
+        return view('cart.index', compact('cartItems', 'total')); // el total a la vista
     }
 
     // Añadir al carrito
-    public function store(Request $request)
+    public function store(Request $request) 
     {
         $request->validate([
             'car_id' => 'required|exists:cars,id',
-            'quantity' => 'integer|min:1|max:10',
+            'quantity' => 'integer|min:1|max:10', 
         ]);
 
-        $car = Car::findOrFail($request->car_id);
+        $car = Car::findOrFail($request->car_id); // Verificar que el coche está disponible
         
-        // Verificar si ya está en el carrito
-        $cartItem = Cart::where('user_id', auth()->id())
+        // Verificar si ya está en el carrito (importante)
+        $cartItem = Cart::where('user_id', auth()->id()) 
             ->where('car_id', $request->car_id)
             ->first();
 
         if ($cartItem) {
-            $cartItem->increment('quantity', $request->quantity ?? 1);
-            $msg = 'Cantidad actualizada en el carrito';
+            $cartItem->increment('quantity', $request->quantity ?? 1); 
+            $msg = 'Cantidad actualizada en el carrito'; 
         } else {
-            Cart::create([
-                'user_id' => auth()->id(),
+            Cart::create([ 
+                'user_id' => auth()->id(), 
                 'car_id' => $request->car_id,
                 'quantity' => $request->quantity ?? 1,
-            ]);
+            ]); // Si es nuevo, crea la entrada en la tabla 'carts'
             $msg = '¡Coche añadido al carrito!';
         }
 
-        if ($request->ajax()) {
-            $cartCount = Cart::where('user_id', auth()->id())->sum('quantity');
+        if ($request->ajax()) { // Si la petición es AJAX, devolver JSON con el nuevo conteo del carrito
+            $cartCount = Cart::where('user_id', auth()->id())->sum('quantity'); //
             return response()->json([
                 'success' => true,
                 'message' => $msg,
