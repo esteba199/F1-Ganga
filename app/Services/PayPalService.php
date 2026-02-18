@@ -21,6 +21,7 @@ class PayPalService
         $this->baseUrl = config('services.paypal.base_url', 'https://api-m.sandbox.paypal.com');
         $this->clientId = config('services.paypal.client_id');
         $this->clientSecret = config('services.paypal.client_secret');
+        $this->verifySsl = config('services.paypal.verify_ssl', true);
     }
 
     /**
@@ -32,7 +33,8 @@ class PayPalService
         // Hacemos una petición POST a PayPal para pedir permiso (token).
         // Usamos autenticación básica con nuestro Client ID y Secret.
         /** @var \Illuminate\Http\Client\Response $response */
-        $response = Http::withBasicAuth($this->clientId, $this->clientSecret)
+        $response = Http::withOptions(['verify' => $this->verifySsl])
+            ->withBasicAuth($this->clientId, $this->clientSecret)
             ->asForm()
             ->post("{$this->baseUrl}/v1/oauth2/token", [
                 'grant_type' => 'client_credentials', // Tipo de permiso: credenciales de cliente (servidor a servidor)
@@ -59,7 +61,8 @@ class PayPalService
         }
 
         /** @var \Illuminate\Http\Client\Response $response */
-        $response = Http::withToken($accessToken)
+        $response = Http::withOptions(['verify' => $this->verifySsl])
+            ->withToken($accessToken)
             ->post("{$this->baseUrl}/v2/checkout/orders", [
                 'intent' => 'CAPTURE',
                 'purchase_units' => [
@@ -101,7 +104,8 @@ class PayPalService
         }
 
         /** @var \Illuminate\Http\Client\Response $response */
-        $response = Http::withToken($accessToken)
+        $response = Http::withOptions(['verify' => $this->verifySsl])
+            ->withToken($accessToken)
             ->asJson()
             ->post("{$this->baseUrl}/v2/checkout/orders/{$orderId}/capture", [
                 'headers' => [
@@ -137,7 +141,8 @@ class PayPalService
         }
 
         /** @var \Illuminate\Http\Client\Response $response */
-        $response = Http::withToken($accessToken)
+        $response = Http::withOptions(['verify' => $this->verifySsl])
+            ->withToken($accessToken)
             ->post("{$this->baseUrl}/v2/payments/captures/{$captureId}/refund", $payload);
 
         if ($response->successful()) {
