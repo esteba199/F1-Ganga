@@ -40,7 +40,7 @@
     <div id="app" class="d-flex flex-column min-vh-100">
         <nav class="navbar navbar-expand-lg navbar-dark navbar-glass sticky-top shadow-sm">
             <div class="container-fluid px-4">
-                <!-- Logo (Left) -->
+                <!-- Logo -->
                 <a class="navbar-brand fw-bold text-warning fs-4 me-5" href="{{ route('cars.index') }}">
                     <i class="bi bi-lightning-charge-fill me-2"></i>F1 GANGA
                 </a>
@@ -51,7 +51,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarMain">
                     @auth
-                        <!-- Center: Main Navigation Items (equal spacing) -->
+                        <!-- Elementos de navegación principales -->
                         <ul class="navbar-nav mx-auto d-flex gap-4">
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('cars.index') ? 'active text-warning' : 'text-white' }}" href="{{ route('cars.index') }}">
@@ -77,7 +77,7 @@
                             </li>
                         </ul>
 
-                        <!-- Right: Account Dropdown -->
+                        <!-- Parte del navbar de la cuenta -->
                         <ul class="navbar-nav ms-auto">
                             @if(auth()->user()->is_admin)
                                 <li class="nav-item me-3">
@@ -104,7 +104,7 @@
                             </li>
                         </ul>
                     @else
-                        <!-- Guest: Login/Register -->
+                        <!-- Acceder/Registrarse -->
                         <ul class="navbar-nav ms-auto gap-3">
                             <li class="nav-item">
                                 <a class="btn btn-login-custom rounded-pill px-4 py-2 fw-bold" href="{{ route('login') }}">Acceder</a>
@@ -122,7 +122,7 @@
             @yield('content')
         </main>
 
-        <!-- Minimalist Footer -->
+        <!-- Footer -->
         <footer class="mt-5 py-4 glass border-top border-white border-opacity-10">
             <div class="container">
                 <div class="row align-items-center">
@@ -153,12 +153,12 @@
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'X-Requested-With': 'XMLHttpRequest'
+                    'X-Requested-With': 'XMLHttpRequest' // Petición AJAX? Devolver JSON o HTML
                 },
                 body: JSON.stringify({ car_id: carId, quantity: 1 })
             })
             .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
+                if (!response.ok) throw new Error('Error de red');
                 return response.json();
             })
             .then(data => {
