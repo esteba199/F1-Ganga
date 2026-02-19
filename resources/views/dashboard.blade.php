@@ -70,13 +70,7 @@
                                 <i class="bi bi-search me-2"></i>Explorar Catálogo
                             </a>
                         </div>
-                        @if(auth()->user()->is_admin)
-                            <div class="col-md-4">
-                                <a href="{{ route('admin.cars.create') }}" class="btn btn-warning w-100 py-3">
-                                    <i class="bi bi-plus-lg me-2"></i>Publicar Coche
-                                </a>
-                            </div>
-                        @endif
+
                         <div class="col-md-4">
                             <a href="{{ route('profile.edit') }}" class="btn btn-outline-light w-100 py-3">
                                 <i class="bi bi-person-gear me-2"></i>Editar Perfil

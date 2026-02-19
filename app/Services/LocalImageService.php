@@ -9,10 +9,7 @@ class LocalImageService
 {
     protected $disk = 'public';
 
-    /**
-     * Store uploaded image and generate a thumbnail.
-     * Returns relative path that works with asset() helper.
-     */
+
     public function store(UploadedFile $file): string
     {
         $path = $file->store('cars', $this->disk);

@@ -39,11 +39,16 @@ return [
         'client_id' => env('PAYPAL_CLIENT_ID'),
         'client_secret' => env('PAYPAL_CLIENT_SECRET'),
         'base_url' => env('PAYPAL_BASE_URL', 'https://api-m.sandbox.paypal.com'),
-        'verify_ssl' => env('PAYPAL_VERIFY_SSL', true),
+        'verify_ssl' => env('PAYPAL_VERIFY_SSL', false), // false por defecto en entorno local
     ],
 
     'unsplash' => [
         'access_key' => env('UNSPLASH_ACCESS_KEY'),
+    ],
+
+    'telegram' => [
+        'token'   => env('TELEGRAM_BOT_TOKEN'),
+        'chat_id' => env('TELEGRAM_CHAT_ID'),
     ],
 
 ];

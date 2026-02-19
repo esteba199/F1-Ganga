@@ -16,12 +16,9 @@ class PayPalService
      */
     public function __construct()
     {
-        // La URL base para la API REST de Sandbox (pruebas) es api-m.sandbox.paypal.com
-        // 'config()' lee valores de nuestro archivo .env y config/services.php
         $this->baseUrl = config('services.paypal.base_url', 'https://api-m.sandbox.paypal.com');
         $this->clientId = config('services.paypal.client_id');
         $this->clientSecret = config('services.paypal.client_secret');
-        $this->verifySsl = config('services.paypal.verify_ssl', true);
     }
 
     /**
@@ -30,14 +27,13 @@ class PayPalService
      */
     protected function getAccessToken()
     {
-        // Hacemos una petición POST a PayPal para pedir permiso (token).
         // Usamos autenticación básica con nuestro Client ID y Secret.
         /** @var \Illuminate\Http\Client\Response $response */
-        $response = Http::withOptions(['verify' => $this->verifySsl])
+        $response = Http::withOptions(['verify' => false])
             ->withBasicAuth($this->clientId, $this->clientSecret)
             ->asForm()
             ->post("{$this->baseUrl}/v1/oauth2/token", [
-                'grant_type' => 'client_credentials', // Tipo de permiso: credenciales de cliente (servidor a servidor)
+                'grant_type' => 'client_credentials',
             ]);
 
         if ($response->successful()) {
@@ -50,7 +46,7 @@ class PayPalService
 
     /**
      * Crear una orden de pago en PayPal.
-     * Define el monto, moneda y URLs de retorno/canelación.
+     * Define el monto, moneda y URLs de retorno/cancelación.
      */
     public function createOrder($amount, $currency = 'EUR')
     {
@@ -61,7 +57,7 @@ class PayPalService
         }
 
         /** @var \Illuminate\Http\Client\Response $response */
-        $response = Http::withOptions(['verify' => $this->verifySsl])
+        $response = Http::withOptions(['verify' => false])
             ->withToken($accessToken)
             ->post("{$this->baseUrl}/v2/checkout/orders", [
                 'intent' => 'CAPTURE',
@@ -73,14 +69,11 @@ class PayPalService
                         ],
                     ],
                 ],
-                // Configuración de redirección tras el pago:
-                // 'return_url': A donde vuelve el usuario si acepta pagar.
-                // 'cancel_url': A donde vuelve el usuario si le da a cancelar.
                 'application_context' => [
                     'return_url' => route('checkout.success'),
                     'cancel_url' => route('checkout.cancel'),
                     'brand_name' => 'F1 Ganga',
-                    'user_action' => 'PAY_NOW', // El botón dirá "Pagar Ahora"
+                    'user_action' => 'PAY_NOW',
                 ],
             ]);
 
@@ -104,7 +97,7 @@ class PayPalService
         }
 
         /** @var \Illuminate\Http\Client\Response $response */
-        $response = Http::withOptions(['verify' => $this->verifySsl])
+        $response = Http::withOptions(['verify' => false])
             ->withToken($accessToken)
             ->asJson()
             ->post("{$this->baseUrl}/v2/checkout/orders/{$orderId}/capture", [
@@ -119,6 +112,7 @@ class PayPalService
 
         return null;
     }
+
     /**
      * Reembolsar un pago capturado.
      * @param string $captureId ID de la captura (no el Order ID)
@@ -141,7 +135,7 @@ class PayPalService
         }
 
         /** @var \Illuminate\Http\Client\Response $response */
-        $response = Http::withOptions(['verify' => $this->verifySsl])
+        $response = Http::withOptions(['verify' => false])
             ->withToken($accessToken)
             ->post("{$this->baseUrl}/v2/payments/captures/{$captureId}/refund", $payload);
 
