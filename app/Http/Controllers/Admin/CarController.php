@@ -65,6 +65,8 @@ class CarController extends Controller
         // Si viene imagen subida, procesarla y obtener URL
         if ($request->hasFile('image')) {
             $data['image_url'] = $this->images->store($request->file('image'));
+        } else {
+            $data['image_url'] = 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&h=600&fit=crop';
         }
 
         $car = Car::create($data);
