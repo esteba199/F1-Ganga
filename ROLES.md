@@ -1,6 +1,7 @@
 # 🏎️ F1 Ganga - Reparto de Roles
 
 ## 📂 Estructura de Archivos (Asignación Core)
+```
 app/
 ├── Http/Controllers/
 │   ├── AdminDashboardController.php (Misael)
@@ -40,7 +41,7 @@ resources/views/
 routes/
 ├── web.php (Misael/Todos)
 └── auth.php (Jairo)
-
+```
 
 ### 👤 Jairo: Cimientos y Acceso
 **Foco:** Seguridad, usuarios y la base del proyecto.
